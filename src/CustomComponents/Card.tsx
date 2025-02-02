@@ -1,12 +1,10 @@
 import * as React from 'react';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 
 import UploadFileIcon from '@mui/icons-material/UploadFile';
-import SystemUpdateAltIcon from '@mui/icons-material/SystemUpdateAlt';
-import GetAppIcon from '@mui/icons-material/GetApp';
 
 import DownloadButton from './DownloadButton.tsx';
 
@@ -21,7 +19,7 @@ import {
 } from '@mui/material';
 
 
-export default function OutlinedCard({ exportData, importData }) {
+export default function OutlinedCard({ proyectName, exportData, importData }) {
 
   interface JsonContent {
     nodesExport: any;
@@ -30,6 +28,29 @@ export default function OutlinedCard({ exportData, importData }) {
 
   const [jsonContent, setJsonContent] = useState<JsonContent | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [nonError, setNonError] = useState<string | null>(null);
+  const [showError, setShowError] = useState(false);
+  const [showNonError, setShowNonError] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setShowError(true);
+      const timer = setTimeout(() => {
+        setShowError(false);
+      }, 10000);
+      return () => clearTimeout(timer);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (jsonContent) {
+      setShowNonError(true);
+      const timer = setTimeout(() => {
+        setShowNonError(false);
+      }, 5000);
+      return () => clearTimeout(timer);
+    }
+  }, [jsonContent]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -37,7 +58,7 @@ export default function OutlinedCard({ exportData, importData }) {
     if (!file) return;
 
     if (file.type !== 'application/json') {
-      setError('Error al cargar, selecciona un archivo JSON.');
+      setError('El archivo no es de tipo .JSON');
       setJsonContent(null);
       return;
     }
@@ -47,14 +68,24 @@ export default function OutlinedCard({ exportData, importData }) {
       try {
         if (e.target && typeof e.target.result === 'string') {
           const parsedJson = JSON.parse(e.target.result);
-          setJsonContent(parsedJson);
-          setError(null);
+          if (parsedJson.proyectName && parsedJson.nodesExport && parsedJson.edgesExport) {
+            importData(parsedJson);
+            setJsonContent(parsedJson);
+            setNonError('Archivo importado correctamente.');
+            setError(null);
+          } else {
+            setError('El archivo seleccionado no cumple con la estructura requerida');
+            setNonError(null);
+            setJsonContent(null);
+          }
         } else {
-          setError('El archivo no es un JSON válido.');
+          setError('El archivo no cumple con la estructura .JSON');
+          setNonError(null);
           setJsonContent(null);
         }
       } catch (err) {
-        setError('El archivo no es un JSON válido.');
+        setError('El archivo no cumple con la estructura .JSON');
+        setNonError(null);
         setJsonContent(null);
       }
     };
@@ -65,37 +96,28 @@ export default function OutlinedCard({ exportData, importData }) {
     <Box sx={{ minWidth: 275 }}>
       <Card variant="outlined">
         <CardContent>
-          <List sx={{ height: "8%", overflow: 'auto', paddingTop: '0%', paddingBottom: '0%' }} dense>
-            <ListItem disablePadding sx={{ display: 'block' }}>
-              <DownloadButton />
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }}>
-              <ListItemButton onClick={() => exportData()}>
-                <ListItemIcon><GetAppIcon /></ListItemIcon>
-                <ListItemText primary='Exportar Proyecto' />
-              </ListItemButton>
-            </ListItem>
-          </List>
-          {error && (
-            <Typography color="error" variant="body1" sx={{ mt: 2 }}>
-              {error}
-            </Typography>
+          {showError && (
+            <Paper sx={{ p: 2, mt: 2, maxWidth: 200, overflow: 'auto' }}>
+              <Typography color="error" variant="body1" sx={{ mt: 2 }}>
+                {error}
+              </Typography>
+            </Paper>
           )}
-          {jsonContent && (
-            <Paper sx={{ p: 2, mt: 2, maxHeight: 200, overflow: 'auto' }}>
-              <Typography variant="body1" sx={{ whiteSpace: 'pre-wrap' }}>
-                Proyecto: {'\n'}
-                Fecha: {jsonContent.date}{'\n'}
-                Nodos: {jsonContent.nodesExport.length}{'\n'}
-                Conexiones: {jsonContent.edgesExport.length}{'\n'}
+          {showNonError && (
+            <Paper sx={{ p: 2, mt: 2, maxWidth: 200, overflow: 'auto' }}>
+              <Typography color="green" variant="body1" sx={{ mt: 2 }}>
+                {nonError}
               </Typography>
             </Paper>
           )}
           <List sx={{ height: "8%", overflow: 'auto', paddingTop: '0%', paddingBottom: '0%' }} dense>
             <ListItem disablePadding sx={{ display: 'block' }}>
+              <DownloadButton proyectName={proyectName} exportData={exportData} />
+            </ListItem>
+            <ListItem disablePadding sx={{ display: 'block' }}>
               <ListItemButton onClick={() => document.getElementById('fileInput')?.click()}>
                 <ListItemIcon><UploadFileIcon /></ListItemIcon>
-                <ListItemText primary='Seleccionar Archivo' />
+                <ListItemText primary='Importar Proyecto' />
                 <input
                   type="file"
                   accept=".json"
@@ -103,12 +125,6 @@ export default function OutlinedCard({ exportData, importData }) {
                   onChange={handleFileChange}
                   id="fileInput"
                 />
-              </ListItemButton>
-            </ListItem>
-            <ListItem disablePadding sx={{ display: 'block' }}>
-              <ListItemButton onClick={() => { importData(jsonContent); setJsonContent(null); setError(null); }}>
-                <ListItemIcon><SystemUpdateAltIcon /></ListItemIcon>
-                <ListItemText primary='Cargar Proyecto' />
               </ListItemButton>
             </ListItem>
           </List>

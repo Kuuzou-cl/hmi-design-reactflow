@@ -1,7 +1,7 @@
 import './App.css';
 import '@xyflow/react/dist/style.css';
 import { ReactFlow, Panel, Controls, Background, useNodesState, useEdgesState, addEdge, applyNodeChanges } from '@xyflow/react';
-import { useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useCookies } from 'react-cookie';
 
 import SideMenu from './CustomComponents/SideMenu.tsx';
@@ -29,6 +29,14 @@ import TBLRNode from './CustomNodes/TBLR';
 import TrendNode from './CustomNodes/Trend';
 
 const initialNodes = [
+  {
+    id: '0',
+    data: { label: 'Pantalla 1' },
+    position: { x: 0, y: 0 },
+    draggable: false,
+    zIndex: 1,
+    type: 'base'
+  }
 ];
 
 const initialEdges = [
@@ -63,23 +71,24 @@ function App() {
   const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [cookies, setCookie] = useCookies(['last-diagram']);
+  const [proyectName, setProyectName] = useState('Proyecto HMI');
 
   useEffect(() => {
-    // Esta función se ejecutará solo al inicio de la aplicación\
+    const lastName = cookies['savedProyectName'];
     const lastNodes = cookies['savedNodes'];
     const lastEdges = cookies['savedEdges'];
-    if (lastNodes && lastNodes.length > 1) {
+
+    if ((lastNodes && lastNodes.length !== nodes.length) || (lastEdges.length !== edges.length) ||  (lastName && lastName !== proyectName)) {
       const userResponse = window.confirm("¿Deseas cargar el último diagrama guardado?");
       if (userResponse) {
+        setProyectName(lastName);
         setNodes(lastNodes);
         setEdges(lastEdges);
       }else{
-        addNode('base', 'Pantalla 1');
+        setProyectName('Proyecto HMI');
+        setCookie('savedProyectName', proyectName);
       }
-    }else{
-      addNode('base', 'Pantalla 1');
     }
-    
   }, []);
 
   const onConnect = useCallback(
@@ -118,7 +127,6 @@ function App() {
 
     setNodes((nds) => nds.concat(newNode));
 
-    console.log('function addNode');
   };
 
   const onNodesChange = (changes) => {
@@ -127,7 +135,6 @@ function App() {
       setCookie('savedNodes', updatedNodes);
       return updatedNodes;
     });
-    console.log('function onNodesChange');
   };
 
   const changeNameNode = (nodeId, value) => {
@@ -147,7 +154,6 @@ function App() {
       setCookie('savedNodes', updatedNodes);
       return updatedNodes;
     });
-    console.log('function changeNameNode');
   };
 
   const changeLockNode = (nodeId, value) => {
@@ -164,7 +170,6 @@ function App() {
       setCookie('savedNodes', updatedNodes);
       return updatedNodes;
     });
-    console.log('function changeLockNode');
   };
 
   const deleteNode = (node) => {
@@ -178,7 +183,6 @@ function App() {
       setCookie('savedEdges', updatedEdges);
       return updatedEdges;
     });
-    console.log('function deleteNode');
   };
   
   const exportData = () => {
@@ -188,23 +192,22 @@ function App() {
     const date = today.getDate();
     const currentDate = date + "-" + month + "-" + year;
 
-    let diagramData = { nodesExport: nodes, edgesExport: edges, date: currentDate };
+    let diagramData = { proyectName:proyectName ,nodesExport: nodes, edgesExport: edges, date: currentDate };
 
     const jsonString = `data:text/json;chatset=utf-8,${encodeURIComponent(
       JSON.stringify(diagramData)
     )}`;
     const link = document.createElement("a");
     link.href = jsonString;
-    link.download = "hmi_" + currentDate + ".json";
+    link.download = proyectName + ".json";
 
     link.click();
-    console.log('function exportData');
   };
 
   const importData = (jsonData) => {
+    setProyectName(jsonData.proyectName);
     setNodes(jsonData.nodesExport);
     setEdges(jsonData.edgesExport);
-    console.log('function importData');
   };
 
   return (
@@ -222,9 +225,9 @@ function App() {
         style={{ backgroundColor: "#F7F9FB" }}
       >
         <Panel position="top-left">
-          <SideMenu addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} />
+          <SideMenu setCookie={setCookie} proyectName={proyectName} setProyectName={setProyectName} addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} />
         </Panel>
-        <Panel position="bottom-right"><Card exportData={exportData} importData={importData} /></Panel>
+        <Panel position="bottom-right"><Card proyectName={proyectName} exportData={exportData} importData={importData} /></Panel>
         <Background />
         <Controls position='top-right' orientation='horizontal' showFitView={false} showInteractive={false} />
       </ReactFlow>

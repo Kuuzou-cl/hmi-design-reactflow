@@ -13,48 +13,55 @@ import ImageIcon from '@mui/icons-material/Image';
 
 import { toPng } from 'html-to-image';
 
-function downloadImage(dataUrl) {
-    const a = document.createElement('a');
-
-    a.setAttribute('download', 'reactflow.png');
-    a.setAttribute('href', dataUrl);
-    a.click();
-}
-
 const imageWidth = 1920;
 const imageHeight = 1080;
 
-function DownloadButton() {
+function DownloadButton({ proyectName, exportData }) {
     const { getNodes } = useReactFlow();
     const onClick = () => {
         // Calcular tamaño de la imagen
         // Elemento CSS`.react-flow__viewport`
         const nodesBounds = getNodesBounds(getNodes());
+
         const viewport = getViewportForBounds(
             nodesBounds,
-            imageWidth,
-            imageHeight,
-            0.5,
+            nodesBounds.width,
+            nodesBounds.height,
+            1,
             3,
             0.1
         );
 
-        toPng(document.querySelector('.react-flow__viewport'), {
+        const htmlElement = document.querySelector('.react-flow__viewport') as HTMLElement;
+
+        const options = {
             backgroundColor: '#F7F9FB',
-            width: imageWidth,
-            height: imageHeight,
+            width: nodesBounds.width,
+            height: nodesBounds.height,
             style: {
-                width: imageWidth,
-                height: imageHeight,
+                width: imageWidth.toString(),
+                height: imageHeight.toString(),
                 transform: `translate(${viewport.x}px, ${viewport.y}px) scale(${viewport.zoom})`,
             },
-        }).then(downloadImage);
+        };
+
+        if (htmlElement) {
+            toPng(htmlElement, options).then((dataUrl) => {
+                const link = document.createElement('a');
+                link.download = `${proyectName}.png`;
+                link.href = dataUrl;
+                link.click();
+            });
+            exportData();
+        } else {
+            console.log('error al generar imagen');
+        }
     };
 
     return (
         <ListItemButton onClick={onClick}>
             <ListItemIcon><ImageIcon /></ListItemIcon>
-            <ListItemText primary='Exportar Imagen' />
+            <ListItemText primary='Exportar Proyecto' />
         </ListItemButton>
     );
 }

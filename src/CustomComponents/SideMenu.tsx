@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { styled } from '@mui/material/styles';
-import Avatar from '@mui/material/Avatar';
 import MuiDrawer, { drawerClasses } from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import MenuContent from './MenuContent.tsx';
+
+import { useState } from "react";
+
+import FolderIcon from '@mui/icons-material/Folder';
 
 const drawerWidth = 300;
 
@@ -22,8 +25,20 @@ const Drawer = styled(MuiDrawer)({
 });
 
 
-export default function SideMenu({ addNode, deleteNode, changeNameNode, changeLockNode, exportData, importData }) {
+export default function SideMenu({ setCookie, proyectName, setProyectName, addNode, deleteNode, changeNameNode, changeLockNode, exportData, importData }) {
+    const [editingIndex, setEditingIndex] = useState<number | null>(null);
+    
 
+    const handleBlur = (index) => {
+        setEditingIndex(null);
+        setCookie('savedProyectName', proyectName)
+    };
+
+    const handleEditClick = (index: number, currentText: string) => {
+        setEditingIndex(index);
+        setProyectName(currentText);
+        setCookie('savedProyectName', proyectName)
+      };
 
     return (
         <Drawer
@@ -34,7 +49,7 @@ export default function SideMenu({ addNode, deleteNode, changeNameNode, changeLo
                     backgroundColor: 'background.paper',
                 },
             }}
-        >             
+        >
             <Stack
                 direction="row"
                 sx={{
@@ -45,15 +60,23 @@ export default function SideMenu({ addNode, deleteNode, changeNameNode, changeLo
                     borderColor: 'divider',
                 }}
             >
-                <Avatar
-                    sizes="small"
-                    alt="Proyecto 001"
-                    src="/static/images/avatar/7.jpg"
-                    sx={{ width: 36, height: 36 }}
-                />
+                <FolderIcon sx={{ width: 36, height: 36 }} />
                 <Box sx={{ mr: 'auto' }}>
-                    <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }}>
-                        Nombre Proyecto
+
+                    <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: '16px' }} onClick={() => handleEditClick(0, proyectName)}>
+                        {editingIndex === 0 ? (
+                            <>
+                                <input
+                                    type="text"
+                                    value={proyectName}
+                                    onChange={(e) => setProyectName(e.target.value)}
+                                    onBlur={() => handleBlur(1)}
+                                    autoFocus
+                                />
+                            </>
+                        ) : (
+                            proyectName
+                        )}
                     </Typography>
                     <Typography variant="caption" sx={{ color: 'text.secondary' }}>
                         Avisos/Errores
@@ -69,7 +92,7 @@ export default function SideMenu({ addNode, deleteNode, changeNameNode, changeLo
                     flexDirection: 'column',
                 }}
             >
-                <MenuContent addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} exportData={exportData} importData={importData}/>
+                <MenuContent addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} exportData={exportData} importData={importData} />
             </Box>
         </Drawer>
     );
