@@ -1,7 +1,8 @@
 import './App.css';
 import '@xyflow/react/dist/style.css';
-import { ReactFlow, Panel, Controls, Background, useNodesState, useEdgesState, addEdge } from '@xyflow/react';
-import { useCallback } from 'react';
+import { ReactFlow, Panel, Controls, Background, useNodesState, useEdgesState, addEdge, applyNodeChanges } from '@xyflow/react';
+import { useEffect, useCallback } from 'react';
+import { useCookies } from 'react-cookie';
 
 import SideMenu from './CustomComponents/SideMenu.tsx';
 import Card from './CustomComponents/Card.tsx';
@@ -28,15 +29,14 @@ import TBLRNode from './CustomNodes/TBLR';
 import TrendNode from './CustomNodes/Trend';
 
 const initialNodes = [
-  {
-    id: '0',
-    position: { x: 0, y: 0 },
-    type: 'base',
-    draggable: false,
-    zIndex: -1,
-    data: { label: 'HMI 01' }
-  },
 ];
+
+const initialEdges = [
+];
+
+const edgeTypes = {
+  'custom-edge': CustomEdge,
+};
 
 const nodeTypes = {
   vertice: VerticeNode,
@@ -59,17 +59,28 @@ const nodeTypes = {
   trend: TrendNode,
 };
 
-const initialEdges = [
-];
-
-const edgeTypes = {
-  'custom-edge': CustomEdge,
-};
-
-
 function App() {
-  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
+  const [cookies, setCookie] = useCookies(['last-diagram']);
+
+  useEffect(() => {
+    // Esta función se ejecutará solo al inicio de la aplicación\
+    const lastNodes = cookies['savedNodes'];
+    const lastEdges = cookies['savedEdges'];
+    if (lastNodes && lastNodes.length > 1) {
+      const userResponse = window.confirm("¿Deseas cargar el último diagrama guardado?");
+      if (userResponse) {
+        setNodes(lastNodes);
+        setEdges(lastEdges);
+      }else{
+        addNode('base', 'Pantalla 1');
+      }
+    }else{
+      addNode('base', 'Pantalla 1');
+    }
+    
+  }, []);
 
   const onConnect = useCallback(
     (connection) => {
@@ -77,6 +88,7 @@ function App() {
       setEdges((eds) => addEdge(edge, eds));
     },
     [setEdges],
+    setCookie('savedEdges', edges)
   );
 
   const addNode = (nodeType, tagName) => {
@@ -106,11 +118,21 @@ function App() {
 
     setNodes((nds) => nds.concat(newNode));
 
+    console.log('function addNode');
+  };
+
+  const onNodesChange = (changes) => {
+    setNodes((nds) => {
+      const updatedNodes = applyNodeChanges(changes, nds);
+      setCookie('savedNodes', updatedNodes);
+      return updatedNodes;
+    });
+    console.log('function onNodesChange');
   };
 
   const changeNameNode = (nodeId, value) => {
-    setNodes((nds) =>
-      nds.map((node) => {
+    setNodes((nds) => {
+      const updatedNodes = nds.map((node) => {
         if (node.id === nodeId) {
           return {
             ...node,
@@ -121,13 +143,16 @@ function App() {
           };
         }
         return node;
-      })
-    );
+      });
+      setCookie('savedNodes', updatedNodes);
+      return updatedNodes;
+    });
+    console.log('function changeNameNode');
   };
 
   const changeLockNode = (nodeId, value) => {
-    setNodes((nds) =>
-      nds.map((node) => {
+    setNodes((nds) => {
+      const updatedNodes = nds.map((node) => {
         if (node.id === nodeId) {
           return {
             ...node,
@@ -135,15 +160,27 @@ function App() {
           };
         }
         return node;
-      })
-    );
+      });
+      setCookie('savedNodes', updatedNodes);
+      return updatedNodes;
+    });
+    console.log('function changeLockNode');
   };
 
   const deleteNode = (node) => {
-    setNodes((nds) => nds.filter((nd) => nd.id !== node.id));
-    setEdges((eds) => eds.filter((edge) => edge.source !== node.id && edge.target !== node.id));
+    setNodes((nds) => {
+      const updatedNodes = nds.filter((nd) => nd.id !== node.id);
+      setCookie('savedNodes', updatedNodes);
+      return updatedNodes;
+    });
+    setEdges((eds) => {
+      const updatedEdges = eds.filter((edge) => edge.source !== node.id && edge.target !== node.id);
+      setCookie('savedEdges', updatedEdges);
+      return updatedEdges;
+    });
+    console.log('function deleteNode');
   };
-
+  
   const exportData = () => {
     const today = new Date();
     const month = today.getMonth() + 1;
@@ -161,11 +198,13 @@ function App() {
     link.download = "hmi_" + currentDate + ".json";
 
     link.click();
+    console.log('function exportData');
   };
 
   const importData = (jsonData) => {
     setNodes(jsonData.nodesExport);
     setEdges(jsonData.edgesExport);
+    console.log('function importData');
   };
 
   return (
