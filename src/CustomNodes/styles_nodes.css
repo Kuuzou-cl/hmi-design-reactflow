@@ -1,0 +1,178 @@
+.react-flow__node:has(.base_hmi) {
+    z-index: -1 !important;
+}
+
+.react-flow__node:has(.vertice_node) {
+    .vertice_node {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+            width: 38px;
+            height: auto;
+        }
+    }
+}
+
+.base_hmi {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 1920px;
+        max-height: 980px;
+        pointer-events: none;
+    }
+}
+
+.bomb {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 50px;
+        max-height: 50px;
+        pointer-events: none;
+    }
+}
+
+.level {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    .label {
+        z-index: 3 !important;
+        position: absolute;
+        left: 8%;
+        top: 8%;
+    }
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 380px;
+        max-height: 320px;
+        pointer-events: none;
+    }
+}
+
+
+.pv {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    .label {
+        z-index: 3 !important;
+        position: absolute;
+        left: 8%;
+        top: 12%;
+    }
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 195px;
+        max-height: 65px;
+        pointer-events: none;
+    }
+}
+
+.pv_tot {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    .label {
+        z-index: 3 !important;
+        position: absolute;
+        left: 8%;
+        top: 8%;
+    }
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 195px;
+        max-height: 95px;
+        pointer-events: none;
+    }
+}
+
+.alarm_level {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 65px;
+        max-height: 25px;
+        pointer-events: none;
+    }
+}
+
+.arrow {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 200px;
+        max-height: 70px;
+        pointer-events: none;
+    }
+
+    .label {
+        z-index: 3 !important;
+        position: absolute;
+        left: 20%;
+        top: 35%;
+    }
+}
+
+.small_icon {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 35px;
+        max-height: 35px;
+        pointer-events: none;
+    }
+}
+
+.title_node {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 250px;
+        max-height: 50px;
+        pointer-events: none;
+    }
+
+    .label {
+        z-index: 3 !important;
+        position: absolute;
+        left: 30%;
+        top: 30%;
+    }
+}
