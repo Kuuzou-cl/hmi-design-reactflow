@@ -78,7 +78,7 @@ function App() {
     const lastNodes = cookies['savedNodes'];
     const lastEdges = cookies['savedEdges'];
 
-    if ((lastNodes && lastNodes.length !== nodes.length) || (lastEdges.length !== edges.length) ||  (lastName && lastName !== proyectName)) {
+    if ((lastNodes && lastNodes.length !== nodes.length) || (lastEdges && lastEdges.length !== edges.length) ||  (lastName && lastName !== proyectName)) {
       const userResponse = window.confirm("¿Deseas cargar el último diagrama guardado?");
       if (userResponse) {
         setProyectName(lastName);
