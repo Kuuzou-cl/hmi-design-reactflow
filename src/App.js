@@ -46,6 +46,67 @@ const edgeTypes = {
   'custom-edge': CustomEdge,
 };
 
+/**
+ * Alcalinidad
+ * Color
+ * Conductividad
+ * Fluor
+ * Hidrocarburo
+ * Solidos suspendidos totales
+ * Actuador
+ * Agitador
+ * Bastidor
+ * Bomba Aireadora
+ * Bomba Dosificadora
+ * Bomba
+ * Boquilla
+ * Calefactor
+ * Clasificador
+ * Cloro
+ * Compactador
+ * Compresor
+ * Configuracion
+ * Decantador
+ * Dosificador volumétrico
+ * Extractor
+ * Filtro
+ * Desarenador
+ * Flujo
+ * Grupo Electrogeno
+ * LSHH
+ * LSH
+ * LSL
+ * LSLL
+ * Motor
+ * Tornillo
+ * Tamiz
+ * Paleta
+ * Prensa
+ * Tambor
+ * Nivel
+ * Oxigeno
+ * Potencial de oxidacion reduccion
+ * PH
+ * Planta
+ * PLC
+ * PM
+ * Presion
+ * PSH
+ * PSL
+ * Reja
+ * Solidos disueltos totales
+ * Sedimentador
+ * Soplador
+ * Tablero
+ * Temperatura
+ * Turbiedad
+ * UPS
+ * Valvula analoga
+ * Valvula Discreta
+ * VDF
+ * Voltaje
+ */
+
 const nodeTypes = {
   vertice: VerticeNode,
   title: TitleNode,
