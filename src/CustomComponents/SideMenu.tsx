@@ -11,7 +11,7 @@ import { useState } from "react";
 
 import FolderIcon from '@mui/icons-material/Folder';
 
-const drawerWidth = 300;
+const drawerWidth = 350;
 
 const Drawer = styled(MuiDrawer)({
     width: drawerWidth,

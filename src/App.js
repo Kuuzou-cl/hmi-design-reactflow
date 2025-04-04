@@ -9,19 +9,44 @@ import Card from './CustomComponents/Card.tsx';
 
 import CustomEdge from './CustomEdges/CustomEdge';
 
-import VerticeNode from './CustomNodes/Vertice';
-import TitleNode from './CustomNodes/Title';
-import ArrowNode from './CustomNodes/Arrow';
 import BaseNode from './CustomNodes/Base';
-import BombNode from './CustomNodes/Bomb';
-import GPELNode from './CustomNodes/GPEL';
-import LevelNode from './CustomNodes/Level';
-import FlowNode from './CustomNodes/Flow';
-import FlowTotNode from './CustomNodes/Flow_tot.jsx';
+import ArrowNode from './CustomNodes/Arrow';
+import TitleNode from './CustomNodes/Title';
+import VerticeNode from './CustomNodes/Vertice';
+
+import ActuadorNode from './CustomNodes/Actuador.jsx';
+import AgitadorNode from './CustomNodes/Agitador.jsx';
+import AlcalinidadNode from './CustomNodes/Alcalinidad.jsx';
+import BastidorNode from './CustomNodes/Bastidor.jsx';
+import BombaAireadoraNode from './CustomNodes/Bomba_aireadora.jsx';
+import BombaDosificadoraNode from './CustomNodes/Bomba_dosificadora.jsx';
+import BombaElevadora from './CustomNodes/Bomba_elevadora.jsx';
+import BombaHorometro from './CustomNodes/Bomba_horometro.jsx';
+import BombaLectura from './CustomNodes/Bomba_lectura.jsx';
+import BombaLodo from './CustomNodes/Bomba_lodo.jsx';
+import BombaPartidaDirecta from './CustomNodes/Bomba_partida_directa.jsx';
+import BombaPartidaSuave from './CustomNodes/Bomba_partida_suave.jsx';
+import BombaTransvasije from './CustomNodes/Bomba_transvasije.jsx';
+import BombaVDF from './CustomNodes/Bomba_vdf.jsx';
+import BoquillaNode from './CustomNodes/Boquilla.jsx';
+import CalefactorNode from './CustomNodes/Calefactor.jsx';
+import EngineNode from './CustomNodes/Engine.jsx';
+import PVNode from './CustomNodes/PV_v1.jsx';
+import CompresorNode from './CustomNodes/Compresor.jsx';
+import DesarenadorNode from './CustomNodes/Desarenador.jsx';
+import DosificadorVolumetricoNode from './CustomNodes/Dosificador_volumetrico.jsx';
+import FiltroNode from './CustomNodes/Filtro.jsx';
+import GeneradorNode from './CustomNodes/Generador.jsx';
 import LSHHNode from './CustomNodes/LSHH';
 import LSHNode from './CustomNodes/LSH';
 import LSLNode from './CustomNodes/LSL';
 import LSLLNode from './CustomNodes/LSLL';
+import LevelNode from './CustomNodes/Level';
+
+
+
+import BombaNode from './CustomNodes/Bomba.jsx';
+import FlowTotNode from './CustomNodes/Flow_tot.jsx';
 import PLCNode from './CustomNodes/PLC';
 import PLTANode from './CustomNodes/PLTA';
 import PMNode from './CustomNodes/PM';
@@ -46,81 +71,56 @@ const edgeTypes = {
   'custom-edge': CustomEdge,
 };
 
-/**
- * Alcalinidad
- * Color
- * Conductividad
- * Fluor
- * Hidrocarburo
- * Solidos suspendidos totales
- * Actuador
- * Agitador
- * Bastidor
- * Bomba Aireadora
- * Bomba Dosificadora
- * Bomba
- * Boquilla
- * Calefactor
- * Clasificador
- * Cloro
- * Compactador
- * Compresor
- * Configuracion
- * Decantador
- * Dosificador volumétrico
- * Extractor
- * Filtro
- * Desarenador
- * Flujo
- * Grupo Electrogeno
- * LSHH
- * LSH
- * LSL
- * LSLL
- * Motor
- * Tornillo
- * Tamiz
- * Paleta
- * Prensa
- * Tambor
- * Nivel
- * Oxigeno
- * Potencial de oxidacion reduccion
- * PH
- * Planta
- * PLC
- * PM
- * Presion
- * PSH
- * PSL
- * Reja
- * Solidos disueltos totales
- * Sedimentador
- * Soplador
- * Tablero
- * Temperatura
- * Turbiedad
- * UPS
- * Valvula analoga
- * Valvula Discreta
- * VDF
- * Voltaje
- */
-
 const nodeTypes = {
-  vertice: VerticeNode,
-  title: TitleNode,
-  arrow: ArrowNode,
   base: BaseNode,
-  bomb: BombNode,
-  gpel: GPELNode,
-  level: LevelNode,
-  flow: FlowNode,
-  flow_tot: FlowTotNode,
+  arrow: ArrowNode,
+  title: TitleNode,
+  vertice: VerticeNode,
+  
+  actuador: ActuadorNode,
+  agitador: AgitadorNode,
+  alcalinidad: AlcalinidadNode,
+  bastidor: BastidorNode,
+  bomba: BombaNode,
+  aireadora: BombaAireadoraNode,
+  dosificadora: BombaDosificadoraNode,
+  bomba_elevadora: BombaElevadora,
+  bomba_horometro: BombaHorometro,
+  bomba_lectura: BombaLectura,
+  bomba_lodo: BombaLodo,
+  bomba_partida_directa: BombaPartidaDirecta,
+  bomba_partida_suave: BombaPartidaSuave,
+  bomba_transvasije: BombaTransvasije,
+  bomba_vdf: BombaVDF,
+  boquilla: BoquillaNode,
+  calefactor: CalefactorNode,
+  clasificador: EngineNode,
+  cloro: PVNode,
+  color: PVNode,
+  compactador: EngineNode,
+  compresor: CompresorNode,
+  conductividad: PVNode,
+  configuracion: EngineNode,
+  decantador: EngineNode,
+  desarenador: DesarenadorNode,
+  dosificador_volumetrico: DosificadorVolumetricoNode,
+  extractor: EngineNode,
+  filtro: FiltroNode,
+  flujo: PVNode,
+  fluor: PVNode,
+  gpel: GeneradorNode,
+  hidrocarburo: PVNode,
   lshh: LSHHNode,
   lsh: LSHNode,
   lsl: LSLNode,
   lsll: LSLLNode,
+  motor: EngineNode,
+  level: LevelNode,
+  oxigeno: PVNode,
+  
+  
+  
+  flow_tot: FlowTotNode,
   plc: PLCNode,
   plta: PLTANode,
   pm: PMNode,

@@ -61,37 +61,52 @@ export default function MenuContent({ addNode, deleteNode, changeNameNode, chang
     { id: 3, text: NodesTextLengthDisplay('Título', 'title'), icon: <AddCircleIcon />, type: 'title', tagname: NodesTagNameDisplay('Title', 'title') },
     { id: 4, text: NodesTextLengthDisplay('Vertice', 'vertice'), icon: <AddCircleIcon />, type: 'vertice', tagname: NodesTagNameDisplay('Vertice', 'vertice') },
     /** Objetos planta */
-    { id: 5, text: NodesTextLengthDisplay('Actuador', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
-    { id: 6, text: NodesTextLengthDisplay('Agitador', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
-    { id: 7, text: NodesTextLengthDisplay('Bastidor', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
-    { id: 8, text: NodesTextLengthDisplay('Bomba', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 9, text: NodesTextLengthDisplay('Bomba Aireadora', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 10, text: NodesTextLengthDisplay('Bomba Dosif.', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 11, text: NodesTextLengthDisplay('Boquilla', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 12, text: NodesTextLengthDisplay('Calefactor', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 13, text: NodesTextLengthDisplay('Clasificador', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 14, text: NodesTextLengthDisplay('Cloro', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 15, text: NodesTextLengthDisplay('Color', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 16, text: NodesTextLengthDisplay('Compactador', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 17, text: NodesTextLengthDisplay('Compresor', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 18, text: NodesTextLengthDisplay('Configuración', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 19, text: NodesTextLengthDisplay('Conductividad', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 20, text: NodesTextLengthDisplay('Decantador', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 21, text: NodesTextLengthDisplay('Desarenador', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 22, text: NodesTextLengthDisplay('Dosif. Volumétrico', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 23, text: NodesTextLengthDisplay('Extractor', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 24, text: NodesTextLengthDisplay('Filtro', 'bomb'), icon: <AddCircleIcon />, type: 'bomb', tagname: NodesTagNameDisplay('BOMB', 'bomb') },
-    { id: 25, text: NodesTextLengthDisplay('Flujo', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
-    { id: 26, text: NodesTextLengthDisplay('Flujo totalizado', 'flow_tot'), icon: <AddCircleIcon />, type: 'flow_tot', tagname: NodesTagNameDisplay('FIT', 'flow_tot') },
-    { id: 27, text: NodesTextLengthDisplay('Fluor', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
-    { id: 28, text: NodesTextLengthDisplay('Generador', 'gpel'), icon: <AddCircleIcon />, type: 'gpel', tagname: NodesTagNameDisplay('GPEL', 'gpel') },
-    { id: 29, text: NodesTextLengthDisplay('Hidrocarburo', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
-    { id: 30, text: NodesTextLengthDisplay('Motor', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
+    { id: 5, text: NodesTextLengthDisplay('Actuador', 'actuador'), icon: <AddCircleIcon />, type: 'actuador', tagname: NodesTagNameDisplay('ACTD', 'actuador') },
+    { id: 6, text: NodesTextLengthDisplay('Agitador', 'agitador'), icon: <AddCircleIcon />, type: 'agitador', tagname: NodesTagNameDisplay('AGIT', 'agitador') },
+    { id: 7, text: NodesTextLengthDisplay('Alcalinidad', 'alcalinidad'), icon: <AddCircleIcon />, type: 'alcalinidad', tagname: NodesTagNameDisplay('ALCIT', 'alcalinidad') },
+    { id: 8, text: NodesTextLengthDisplay('Bastidor', 'bastidor'), icon: <AddCircleIcon />, type: 'bastidor', tagname: NodesTagNameDisplay('BAST', 'bastidor') },
+    { id: 10, text: NodesTextLengthDisplay('Bomba Aireadora', 'aireadora'), icon: <AddCircleIcon />, type: 'aireadora', tagname: NodesTagNameDisplay('AIR', 'aireadora') },
+    { id: 11, text: NodesTextLengthDisplay('Bomba Dosif.', 'dosificadora'), icon: <AddCircleIcon />, type: 'dosificadora', tagname: NodesTagNameDisplay('BDOS', 'dosificadora') },
+    { id: 12, text: NodesTextLengthDisplay('Bomba Elevadora', 'bomba_elevadora'), icon: <AddCircleIcon />, type: 'bomba_elevadora', tagname: NodesTagNameDisplay('BOMBEL', 'bomba_elevadora') },
+    { id: 13, text: NodesTextLengthDisplay('Bomba Horómetro', 'bomba_horometro'), icon: <AddCircleIcon />, type: 'bomba_horometro', tagname: NodesTagNameDisplay('BOMBHR', 'bomba_horometro') },
+    { id: 14, text: NodesTextLengthDisplay('Bomba Lectura', 'bomba_lectura'), icon: <AddCircleIcon />, type: 'bomba_lectura', tagname: NodesTagNameDisplay('BOMBLC', 'bomba_lectura') },
+    { id: 15, text: NodesTextLengthDisplay('Bomba Lodo', 'bomba_lodo'), icon: <AddCircleIcon />, type: 'bomba_lodo', tagname: NodesTagNameDisplay('BOMBLD', 'bomba_lodo') },
+    { id: 16, text: NodesTextLengthDisplay('Bomba Part. Directa', 'bomba_partida_directa'), icon: <AddCircleIcon />, type: 'bomba_partida_directa', tagname: NodesTagNameDisplay('BOMBPD', 'bomba_partida_directa') },
+    { id: 17, text: NodesTextLengthDisplay('Bomba Part. Suave', 'bomba_partida_suave'), icon: <AddCircleIcon />, type: 'bomba_partida_suave', tagname: NodesTagNameDisplay('BOMBPS', 'bomba_partida_suave') },
+    { id: 18, text: NodesTextLengthDisplay('Bomba Transvasije', 'bomba_transvasije'), icon: <AddCircleIcon />, type: 'bomba_transvasije', tagname: NodesTagNameDisplay('BOMBTS', 'bomba_transvasije') },
+    { id: 19, text: NodesTextLengthDisplay('Bomba VDF', 'bomba_vdf'), icon: <AddCircleIcon />, type: 'bomba_vdf', tagname: NodesTagNameDisplay('BOMB', 'bomba_vdf') },
+    { id: 20, text: NodesTextLengthDisplay('Boquilla', 'boquilla'), icon: <AddCircleIcon />, type: 'boquilla', tagname: NodesTagNameDisplay('BOQ', 'boquilla') },
+    { id: 21, text: NodesTextLengthDisplay('Calefactor', 'calefactor'), icon: <AddCircleIcon />, type: 'calefactor', tagname: NodesTagNameDisplay('CALEF', 'calefactor') },
+    { id: 22, text: NodesTextLengthDisplay('Clasificador', 'clasificador'), icon: <AddCircleIcon />, type: 'clasificador', tagname: NodesTagNameDisplay('CLASI', 'clasificador') },
+    { id: 23, text: NodesTextLengthDisplay('Cloro', 'cloro'), icon: <AddCircleIcon />, type: 'cloro', tagname: NodesTagNameDisplay('CLIT', 'cloro') },
+    { id: 24, text: NodesTextLengthDisplay('Color', 'color'), icon: <AddCircleIcon />, type: 'color', tagname: NodesTagNameDisplay('COLIT', 'color') },
+    { id: 25, text: NodesTextLengthDisplay('Compactador', 'compactador'), icon: <AddCircleIcon />, type: 'compactador', tagname: NodesTagNameDisplay('COMPAC', 'compactador') },
+    { id: 26, text: NodesTextLengthDisplay('Compresor', 'compresor'), icon: <AddCircleIcon />, type: 'compresor', tagname: NodesTagNameDisplay('CMPR', 'compresor') },
+    { id: 27, text: NodesTextLengthDisplay('Conductividad', 'conductividad'), icon: <AddCircleIcon />, type: 'conductividad', tagname: NodesTagNameDisplay('CONIT', 'conductividad') },
+    { id: 28, text: NodesTextLengthDisplay('Configuración', 'configuracion'), icon: <AddCircleIcon />, type: 'configuracion', tagname: NodesTagNameDisplay('CONF', 'configuracion') },
+    { id: 29, text: NodesTextLengthDisplay('Decantador', 'decantador'), icon: <AddCircleIcon />, type: 'decantador', tagname: NodesTagNameDisplay('DECA', 'decantador') },
+    { id: 30, text: NodesTextLengthDisplay('Desarenador', 'desarenador'), icon: <AddCircleIcon />, type: 'desarenador', tagname: NodesTagNameDisplay('DESAR', 'desarenador') },
+    { id: 31, text: NodesTextLengthDisplay('Dosif. Volumétrico', 'dosificador_volumetrico'), icon: <AddCircleIcon />, type: 'dosificador_volumetrico', tagname: NodesTagNameDisplay('DOSV', 'dosificador_volumetrico') },
+    { id: 32, text: NodesTextLengthDisplay('Extractor', 'extractor'), icon: <AddCircleIcon />, type: 'extractor', tagname: NodesTagNameDisplay('EXTR', 'extractor') },
+    { id: 33, text: NodesTextLengthDisplay('Filtro', 'filtro'), icon: <AddCircleIcon />, type: 'filtro', tagname: NodesTagNameDisplay('FILTR', 'filtro') },
+    { id: 34, text: NodesTextLengthDisplay('Flujo', 'flujo'), icon: <AddCircleIcon />, type: 'flujo', tagname: NodesTagNameDisplay('FIT', 'flujo') },
+    { id: 35, text: NodesTextLengthDisplay('Fluor', 'flujo'), icon: <AddCircleIcon />, type: 'flujo', tagname: NodesTagNameDisplay('FLUIT', 'flujo') },
+    { id: 36, text: NodesTextLengthDisplay('Generador', 'gpel'), icon: <AddCircleIcon />, type: 'gpel', tagname: NodesTagNameDisplay('GPEL', 'gpel') },
+    { id: 37, text: NodesTextLengthDisplay('Hidrocarburo', 'hidrocarburo'), icon: <AddCircleIcon />, type: 'hidrocarburo', tagname: NodesTagNameDisplay('HIDIT', 'hidrocarburo') },
+    { id: 32, text: NodesTextLengthDisplay('LSHH (Rebalse)', 'lshh'), icon: <AddCircleIcon />, type: 'lshh', tagname: NodesTagNameDisplay('LSHH', 'lshh') },
+    { id: 33, text: NodesTextLengthDisplay('LSH (Alto)', 'lsh'), icon: <AddCircleIcon />, type: 'lsh', tagname: NodesTagNameDisplay('LSH', 'lsh') },
+    { id: 34, text: NodesTextLengthDisplay('LSL (Bajo)', 'lsl'), icon: <AddCircleIcon />, type: 'lsl', tagname: NodesTagNameDisplay('LSL', 'lsl') },
+    { id: 35, text: NodesTextLengthDisplay('LSLL (Seco)', 'lsll'), icon: <AddCircleIcon />, type: 'lsll', tagname: NodesTagNameDisplay('LSLL', 'lsll') },
+    { id: 36, text: NodesTextLengthDisplay('Motor', 'motor'), icon: <AddCircleIcon />, type: 'motor', tagname: NodesTagNameDisplay('MOTR', 'motor') },
+    { id: 37, text: NodesTextLengthDisplay('Nivel', 'level'), icon: <AddCircleIcon />, type: 'level', tagname: NodesTagNameDisplay('LIT', 'level') },
+    { id: 38, text: NodesTextLengthDisplay('Oxígeno', 'oxigeno'), icon: <AddCircleIcon />, type: 'oxigeno', tagname: NodesTagNameDisplay('OXIT', 'oxigeno') },
+
+    /**
+    
+    
+    
+    
     { id: 31, text: NodesTextLengthDisplay('Nivel', 'level'), icon: <AddCircleIcon />, type: 'level', tagname: NodesTagNameDisplay('LIT', 'level') },
-    { id: 32, text: NodesTextLengthDisplay('Nivel Pera HH', 'lshh'), icon: <AddCircleIcon />, type: 'lshh', tagname: NodesTagNameDisplay('LSHH', 'lshh') },
-    { id: 33, text: NodesTextLengthDisplay('Nivel Pera H', 'lsh'), icon: <AddCircleIcon />, type: 'lsh', tagname: NodesTagNameDisplay('LSH', 'lsh') },
-    { id: 34, text: NodesTextLengthDisplay('Nivel Pera L', 'lsl'), icon: <AddCircleIcon />, type: 'lsl', tagname: NodesTagNameDisplay('LSL', 'lsl') },
-    { id: 35, text: NodesTextLengthDisplay('Nivel Pera LL', 'lsll'), icon: <AddCircleIcon />, type: 'lsll', tagname: NodesTagNameDisplay('LSLL', 'lsll') },
     { id: 36, text: NodesTextLengthDisplay('Oxigeno', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
     { id: 37, text: NodesTextLengthDisplay('PH', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
     { id: 38, text: NodesTextLengthDisplay('Paleta', 'flow'), icon: <AddCircleIcon />, type: 'flow', tagname: NodesTagNameDisplay('FIT', 'flow') },
@@ -119,6 +134,7 @@ export default function MenuContent({ addNode, deleteNode, changeNameNode, chang
     { id: 60, text: NodesTextLengthDisplay('Válvula discreta', 'trend'), icon: <AddCircleIcon />, type: 'trend', tagname: NodesTagNameDisplay('Trend', 'trend') },
     { id: 61, text: NodesTextLengthDisplay('VDF', 'trend'), icon: <AddCircleIcon />, type: 'trend', tagname: NodesTagNameDisplay('Trend', 'trend') },
     { id: 62, text: NodesTextLengthDisplay('Voltaje', 'trend'), icon: <AddCircleIcon />, type: 'trend', tagname: NodesTagNameDisplay('Trend', 'trend') },
+      */
   ];
 
   const handleToggle = (id) => {
@@ -150,9 +166,9 @@ export default function MenuContent({ addNode, deleteNode, changeNameNode, chang
           <div key={item.id}>
             <ListItem key={index} disablePadding sx={{ display: 'block' }}>
               <ListItemButton>
-                <ListItemIcon style={{ textAlign: 'center' }} onClick={() => addNode(item.type, item.tagname)}>{item.icon}</ListItemIcon>
+                <ListItemIcon ><AddCircleIcon onClick={() => addNode(item.type, item.tagname)} /></ListItemIcon>
                 <ListItemText primary={item.text} onClick={() => handleToggle(item.id)} />
-                <ListItemIcon> <MenuOpenIcon onClick={() => handleToggle(item.id)} /> </ListItemIcon>
+                <ListItemIcon onClick={() => handleToggle(item.id)}  > <MenuOpenIcon style={{ textAlign: 'right' }}/> </ListItemIcon>
               </ListItemButton>
             </ListItem>
             <Collapse in={openItemId === item.id} timeout="auto" unmountOnExit>
