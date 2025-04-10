@@ -42,14 +42,20 @@ import LSHNode from './CustomNodes/LSH';
 import LSLNode from './CustomNodes/LSL';
 import LSLLNode from './CustomNodes/LSLL';
 import LevelNode from './CustomNodes/Level';
-
+import MotorNode from './CustomNodes/Motor.jsx';
+import PLTANode from './CustomNodes/PLTA';
+import PLCNode from './CustomNodes/PLC';
+import PMNode from './CustomNodes/PM';
+import PSHNode from './CustomNodes/PSH';
+import PSLNode from './CustomNodes/PSL';
+import RejaNode from './CustomNodes/Reja.jsx';
+import ValvAnalogaNode from './CustomNodes/Valvula_analoga.jsx';
+import ValvDiscretaNode from './CustomNodes/Valvula_discreta.jsx';
+import UPSNode from './CustomNodes/UPS.jsx';
 
 
 import BombaNode from './CustomNodes/Bomba.jsx';
 import FlowTotNode from './CustomNodes/Flow_tot.jsx';
-import PLCNode from './CustomNodes/PLC';
-import PLTANode from './CustomNodes/PLTA';
-import PMNode from './CustomNodes/PM';
 import TBLRNode from './CustomNodes/TBLR';
 import TrendNode from './CustomNodes/Trend';
 
@@ -117,13 +123,35 @@ const nodeTypes = {
   motor: EngineNode,
   level: LevelNode,
   oxigeno: PVNode,
-  
-  
-  
-  flow_tot: FlowTotNode,
-  plc: PLCNode,
+  paleta: MotorNode,
+  ph: PVNode,
   plta: PLTANode,
+  plc: PLCNode,
   pm: PMNode,
+  oxidacion: PVNode,
+  prensa: MotorNode,
+  presion: PVNode,
+  psh: PSHNode,
+  psl: PSLNode,
+  reja: RejaNode,
+  sedimentador: EngineNode,
+  solidos_disueltos: PVNode,
+  solidos_suspendidos: PVNode,
+  soplador:BombaAireadoraNode,
+  tablero: EngineNode,
+  tambor: MotorNode,
+  tamiz: MotorNode,
+  temperatura: PVNode,
+  tornillo: MotorNode,
+  turbiedad: PVNode,
+  ups: UPSNode,
+  valvula_analoga: ValvAnalogaNode,
+  valvula_discreta: ValvDiscretaNode,
+  vdf: EngineNode,
+  voltaje: PVNode,
+
+
+  flow_tot: FlowTotNode,
   tblr: TBLRNode,
   trend: TrendNode,
 };
