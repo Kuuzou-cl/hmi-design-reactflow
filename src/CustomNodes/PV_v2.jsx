@@ -2,7 +2,7 @@ import { Handle, Position } from '@xyflow/react';
 import pv_tot_img from './img/pv_tot.png';
 
 
-function FlowTotNode({ data,isConnectable }) {
+function PV2Node({ data,isConnectable }) {
 
     return (
         <div className="text-updater-node">
@@ -44,4 +44,4 @@ function FlowTotNode({ data,isConnectable }) {
     );
 }
 
-export default FlowTotNode;
+export default PV2Node;

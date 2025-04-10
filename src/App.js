@@ -32,6 +32,7 @@ import BoquillaNode from './CustomNodes/Boquilla.jsx';
 import CalefactorNode from './CustomNodes/Calefactor.jsx';
 import EngineNode from './CustomNodes/Engine.jsx';
 import PVNode from './CustomNodes/PV_v1.jsx';
+import PV2Node from './CustomNodes/PV_v2.jsx';
 import CompresorNode from './CustomNodes/Compresor.jsx';
 import DesarenadorNode from './CustomNodes/Desarenador.jsx';
 import DosificadorVolumetricoNode from './CustomNodes/Dosificador_volumetrico.jsx';
@@ -52,11 +53,7 @@ import RejaNode from './CustomNodes/Reja.jsx';
 import ValvAnalogaNode from './CustomNodes/Valvula_analoga.jsx';
 import ValvDiscretaNode from './CustomNodes/Valvula_discreta.jsx';
 import UPSNode from './CustomNodes/UPS.jsx';
-
-
 import BombaNode from './CustomNodes/Bomba.jsx';
-import FlowTotNode from './CustomNodes/Flow_tot.jsx';
-import TBLRNode from './CustomNodes/TBLR';
 import TrendNode from './CustomNodes/Trend';
 
 const initialNodes = [
@@ -113,6 +110,7 @@ const nodeTypes = {
   extractor: EngineNode,
   filtro: FiltroNode,
   flujo: PVNode,
+  flujo_totalizado: PV2Node,
   fluor: PVNode,
   gpel: GeneradorNode,
   hidrocarburo: PVNode,
@@ -143,17 +141,13 @@ const nodeTypes = {
   tamiz: MotorNode,
   temperatura: PVNode,
   tornillo: MotorNode,
+  trend: TrendNode,
   turbiedad: PVNode,
   ups: UPSNode,
   valvula_analoga: ValvAnalogaNode,
   valvula_discreta: ValvDiscretaNode,
   vdf: EngineNode,
   voltaje: PVNode,
-
-
-  flow_tot: FlowTotNode,
-  tblr: TBLRNode,
-  trend: TrendNode,
 };
 
 function App() {
@@ -190,7 +184,16 @@ function App() {
   );
 
   const addNode = (nodeType, tagName) => {
-    let newId = nodes.length;
+    let tempNodes = [];
+    tempNodes = nodes.filter((node) => node.type === nodeType);
+
+    let newId;
+
+    if (tempNodes.length === 0) {
+      newId = 1;
+    }else{
+      newId = Number(tempNodes[tempNodes.length-1]['id']) + 1;
+    }
 
     let newNode = {}
 
