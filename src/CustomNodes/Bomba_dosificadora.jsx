@@ -8,7 +8,7 @@ function BombaDosificadoraNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Top}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'50%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
@@ -20,7 +20,7 @@ function BombaDosificadoraNode({ data, isConnectable }) {
                 isConnectable={isConnectable}
             />
             <div>
-                <div className='bomb'>
+                <div className='bomb_dosificadora'>
                     <img src={bomb_img} alt='no_img' />
                     <div>{data.label}</div>
                 </div>
@@ -28,7 +28,7 @@ function BombaDosificadoraNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'50%' }}
                 id="c"
                 isConnectable={isConnectable}
             />

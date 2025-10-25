@@ -29,10 +29,56 @@
     }
 }
 
+.actuador {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+    font-size: 14px;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 40px;
+        max-height: 110px;
+        pointer-events: none;
+    }
+}
+
+.agitador {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+    font-size: 14px;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 48px;
+        max-height: 70px;
+        pointer-events: none;
+    }
+}
+
 .bomb {
     width: 100%;
     height: 100%;
     padding: 0%;
+    font-size: 14px;
+
+    img {
+        margin: auto;
+        display: block;
+        max-width: 50px;
+        max-height: 50px;
+        pointer-events: none;
+    }
+}
+
+.bomb_dosificadora {
+    width: 100%;
+    height: 100%;
+    padding: 0%;
+    font-size: 14px;
 
     img {
         margin: auto;
@@ -160,19 +206,21 @@
     width: 100%;
     height: 100%;
     padding: 0%;
+    position: relative;
+}
 
-    img {
-        margin: auto;
-        display: block;
-        max-width: 250px;
-        max-height: 50px;
-        pointer-events: none;
-    }
+.title_node img {
+    display: block;
+    width: 100%;         
+    height: 50px;      
+    object-fit: fill;   
+    pointer-events: none;
+    margin: auto;
+}
 
-    .label {
-        z-index: 3 !important;
-        position: absolute;
-        left: 30%;
-        top: 30%;
-    }
+.title_node .label {
+    z-index: 3 !important;
+    position: absolute;
+    left: 30%;
+    top: 30%;
 }

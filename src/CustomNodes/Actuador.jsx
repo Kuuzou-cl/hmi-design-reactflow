@@ -8,14 +8,14 @@ function ActuadorNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Top}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'52%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
             <Handle
                 type="source"
                 position={Position.Left}
-                style={{ background: '#ebebeb', borderColor:'#000000'}}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '52%'}}
                 id="b"
                 isConnectable={isConnectable}
             />
@@ -28,14 +28,14 @@ function ActuadorNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'52%' }}
                 id="c"
                 isConnectable={isConnectable}
             />
              <Handle
                 type="source"
                 position={Position.Right}
-                style={{ background: '#ebebeb', borderColor:'#000000' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '52%' }}
                 id="d"
                 isConnectable={isConnectable}
             />

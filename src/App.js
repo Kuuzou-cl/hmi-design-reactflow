@@ -11,9 +11,10 @@ import CustomEdge from './CustomEdges/CustomEdge';
 
 import BaseNode from './CustomNodes/Base';
 import ArrowNode from './CustomNodes/Arrow';
+import Arrow2Node from './CustomNodes/Arrow2';
 import TitleNode from './CustomNodes/Title';
+import TextNode from './CustomNodes/Text';
 import VerticeNode from './CustomNodes/Vertice';
-
 import ActuadorNode from './CustomNodes/Actuador.jsx';
 import AgitadorNode from './CustomNodes/Agitador.jsx';
 import AlcalinidadNode from './CustomNodes/Alcalinidad.jsx';
@@ -77,7 +78,9 @@ const edgeTypes = {
 const nodeTypes = {
   base: BaseNode,
   arrow: ArrowNode,
+  arrow2: Arrow2Node,
   title: TitleNode,
+  text: TextNode,
   vertice: VerticeNode,
   
   actuador: ActuadorNode,
@@ -184,16 +187,7 @@ function App() {
   );
 
   const addNode = (nodeType, tagName) => {
-    let tempNodes = [];
-    tempNodes = nodes.filter((node) => node.type === nodeType);
-
-    let newId;
-
-    if (tempNodes.length === 0) {
-      newId = 1;
-    }else{
-      newId = Number(tempNodes[tempNodes.length-1]['id']) + 1;
-    }
+    let newId = nodes.length;
 
     let newNode = {}
 
@@ -265,6 +259,7 @@ function App() {
   };
 
   const deleteNode = (node) => {
+    console.log(node);
     setNodes((nds) => {
       const updatedNodes = nds.filter((nd) => nd.id !== node.id);
       setCookie('savedNodes', updatedNodes);

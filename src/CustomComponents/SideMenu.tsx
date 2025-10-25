@@ -6,10 +6,13 @@ import Divider from '@mui/material/Divider';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import MenuContent from './MenuContent.tsx';
+import MenuContent_Dibujos from './MenuContent_Dibujos.tsx';
 
 import { useState } from "react";
 
 import FolderIcon from '@mui/icons-material/Folder';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 const drawerWidth = 350;
 
@@ -27,7 +30,7 @@ const Drawer = styled(MuiDrawer)({
 
 export default function SideMenu({ setCookie, proyectName, setProyectName, addNode, deleteNode, changeNameNode, changeLockNode, exportData, importData }) {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
-    
+    const [tab, setTab] = useState(0);
 
     const handleBlur = (index) => {
         setEditingIndex(null);
@@ -39,6 +42,10 @@ export default function SideMenu({ setCookie, proyectName, setProyectName, addNo
         setProyectName(currentText);
         setCookie('savedProyectName', proyectName)
       };
+
+    const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+        setTab(newValue);
+    };
 
     return (
         <Drawer
@@ -84,6 +91,11 @@ export default function SideMenu({ setCookie, proyectName, setProyectName, addNo
                 </Box>
             </Stack>
             <Divider />
+            <Tabs value={tab} onChange={handleTabChange} variant="fullWidth">
+                <Tab label="Objetos" />
+                <Tab label="Dibujos" />
+            </Tabs>
+            <Divider />
             <Box
                 sx={{
                     overflow: 'auto',
@@ -92,7 +104,12 @@ export default function SideMenu({ setCookie, proyectName, setProyectName, addNo
                     flexDirection: 'column',
                 }}
             >
-                <MenuContent addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} exportData={exportData} importData={importData} />
+                {tab === 0 && (
+                    <MenuContent addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} exportData={exportData} importData={importData} />
+                )}
+                {tab === 1 && (
+                    <MenuContent_Dibujos addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} exportData={exportData} importData={importData} />
+                )}
             </Box>
         </Drawer>
     );

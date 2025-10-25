@@ -8,7 +8,7 @@ function BombaVDFNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Top}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'49%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
@@ -28,7 +28,7 @@ function BombaVDFNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'49%' }}
                 id="c"
                 isConnectable={isConnectable}
             />

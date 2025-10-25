@@ -37,18 +37,8 @@ const NodesTextLengthDisplay = (text, type) => {
 
 const NodesTagNameDisplay = (text, type) => {
   const nodes = useStore(nodesSelector);
-  let tempNodes = [];
-  tempNodes = nodes.filter((node) => node.type === type);
-  if (tempNodes.length === 0) {
-    const idTag = tempNodes.length + 1;
-    return text + '-' + idTag.toString().padStart(3, '0') || 0;
-  }else{
-    console.log('function '+ type);
-    console.log(tempNodes);  
-    const idTag = Number(tempNodes[tempNodes.length-1]['id']) + 1;
-    return text + '-' + idTag.toString().padStart(3, '0') || 0;
-  }
-  
+  const idTag = nodes.filter((node) => node.type === type).length + 1;
+  return text + '-' + idTag.toString().padStart(3, '0') || 0;
 };
 
 const NodesTypeDisplay = (type) => {
@@ -57,89 +47,74 @@ const NodesTypeDisplay = (type) => {
 };
 
 
-export default function MenuContent({ addNode, deleteNode, changeNameNode, changeLockNode }) {
+export default function MenuContent({ addNode, deleteNode, changeNameNode, changeLockNode, exportData, importData }) {
 
   const [openItemId, setOpenItemId] = useState(null);
 
   const [editingIndex, setEditingIndex] = useState<number | null>(null);
   const [newText, setNewText] = useState<string>('');
 
-  let mainListItems = [
+  let itemTypes = [
     /** Objetos sistema */
-    { id: 1, text: NodesTextLengthDisplay('Base', 'base'), icon: <AddCircleIcon />, type: 'base', tagname: NodesTagNameDisplay('Base', 'base') },
-    { id: 2, text: NodesTextLengthDisplay('Flecha', 'arrow'), icon: <AddCircleIcon />, type: 'arrow', tagname: NodesTagNameDisplay('Arrow', 'arrow') },
-    { id: 3, text: NodesTextLengthDisplay('Título', 'title'), icon: <AddCircleIcon />, type: 'title', tagname: NodesTagNameDisplay('Title', 'title') },
-    { id: 4, text: NodesTextLengthDisplay('Vertice', 'vertice'), icon: <AddCircleIcon />, type: 'vertice', tagname: NodesTagNameDisplay('Vertice', 'vertice') },
-    /** Objetos planta */
-    { id: 5, text: NodesTextLengthDisplay('Actuador', 'actuador'), icon: <AddCircleIcon />, type: 'actuador', tagname: NodesTagNameDisplay('ACTD', 'actuador') },
-    { id: 6, text: NodesTextLengthDisplay('Agitador', 'agitador'), icon: <AddCircleIcon />, type: 'agitador', tagname: NodesTagNameDisplay('AGIT', 'agitador') },
-    { id: 7, text: NodesTextLengthDisplay('Alcalinidad', 'alcalinidad'), icon: <AddCircleIcon />, type: 'alcalinidad', tagname: NodesTagNameDisplay('ALCIT', 'alcalinidad') },
-    { id: 8, text: NodesTextLengthDisplay('Bastidor', 'bastidor'), icon: <AddCircleIcon />, type: 'bastidor', tagname: NodesTagNameDisplay('BAST', 'bastidor') },
-    { id: 10, text: NodesTextLengthDisplay('Bomba Aireadora', 'aireadora'), icon: <AddCircleIcon />, type: 'aireadora', tagname: NodesTagNameDisplay('AIR', 'aireadora') },
-    { id: 11, text: NodesTextLengthDisplay('Bomba Dosif.', 'dosificadora'), icon: <AddCircleIcon />, type: 'dosificadora', tagname: NodesTagNameDisplay('BDOS', 'dosificadora') },
-    { id: 12, text: NodesTextLengthDisplay('Bomba Elevadora', 'bomba_elevadora'), icon: <AddCircleIcon />, type: 'bomba_elevadora', tagname: NodesTagNameDisplay('BOMBEL', 'bomba_elevadora') },
-    { id: 13, text: NodesTextLengthDisplay('Bomba Horómetro', 'bomba_horometro'), icon: <AddCircleIcon />, type: 'bomba_horometro', tagname: NodesTagNameDisplay('BOMBHR', 'bomba_horometro') },
-    { id: 14, text: NodesTextLengthDisplay('Bomba Lectura', 'bomba_lectura'), icon: <AddCircleIcon />, type: 'bomba_lectura', tagname: NodesTagNameDisplay('BOMBLC', 'bomba_lectura') },
-    { id: 15, text: NodesTextLengthDisplay('Bomba Lodo', 'bomba_lodo'), icon: <AddCircleIcon />, type: 'bomba_lodo', tagname: NodesTagNameDisplay('BOMBLD', 'bomba_lodo') },
-    { id: 16, text: NodesTextLengthDisplay('Bomba Part. Directa', 'bomba_partida_directa'), icon: <AddCircleIcon />, type: 'bomba_partida_directa', tagname: NodesTagNameDisplay('BOMBPD', 'bomba_partida_directa') },
-    { id: 17, text: NodesTextLengthDisplay('Bomba Part. Suave', 'bomba_partida_suave'), icon: <AddCircleIcon />, type: 'bomba_partida_suave', tagname: NodesTagNameDisplay('BOMBPS', 'bomba_partida_suave') },
-    { id: 18, text: NodesTextLengthDisplay('Bomba Transvasije', 'bomba_transvasije'), icon: <AddCircleIcon />, type: 'bomba_transvasije', tagname: NodesTagNameDisplay('BOMBTS', 'bomba_transvasije') },
-    { id: 19, text: NodesTextLengthDisplay('Bomba VDF', 'bomba_vdf'), icon: <AddCircleIcon />, type: 'bomba_vdf', tagname: NodesTagNameDisplay('BOMB', 'bomba_vdf') },
-    { id: 20, text: NodesTextLengthDisplay('Boquilla', 'boquilla'), icon: <AddCircleIcon />, type: 'boquilla', tagname: NodesTagNameDisplay('BOQ', 'boquilla') },
-    { id: 21, text: NodesTextLengthDisplay('Calefactor', 'calefactor'), icon: <AddCircleIcon />, type: 'calefactor', tagname: NodesTagNameDisplay('CALEF', 'calefactor') },
-    { id: 22, text: NodesTextLengthDisplay('Clasificador', 'clasificador'), icon: <AddCircleIcon />, type: 'clasificador', tagname: NodesTagNameDisplay('CLASI', 'clasificador') },
-    { id: 23, text: NodesTextLengthDisplay('Cloro', 'cloro'), icon: <AddCircleIcon />, type: 'cloro', tagname: NodesTagNameDisplay('CLIT', 'cloro') },
-    { id: 24, text: NodesTextLengthDisplay('Color', 'color'), icon: <AddCircleIcon />, type: 'color', tagname: NodesTagNameDisplay('COLIT', 'color') },
-    { id: 25, text: NodesTextLengthDisplay('Compactador', 'compactador'), icon: <AddCircleIcon />, type: 'compactador', tagname: NodesTagNameDisplay('COMPAC', 'compactador') },
-    { id: 26, text: NodesTextLengthDisplay('Compresor', 'compresor'), icon: <AddCircleIcon />, type: 'compresor', tagname: NodesTagNameDisplay('CMPR', 'compresor') },
-    { id: 27, text: NodesTextLengthDisplay('Conductividad', 'conductividad'), icon: <AddCircleIcon />, type: 'conductividad', tagname: NodesTagNameDisplay('CONIT', 'conductividad') },
-    { id: 28, text: NodesTextLengthDisplay('Configuración', 'configuracion'), icon: <AddCircleIcon />, type: 'configuracion', tagname: NodesTagNameDisplay('CONF', 'configuracion') },
-    { id: 29, text: NodesTextLengthDisplay('Decantador', 'decantador'), icon: <AddCircleIcon />, type: 'decantador', tagname: NodesTagNameDisplay('DECA', 'decantador') },
-    { id: 30, text: NodesTextLengthDisplay('Desarenador', 'desarenador'), icon: <AddCircleIcon />, type: 'desarenador', tagname: NodesTagNameDisplay('DESAR', 'desarenador') },
-    { id: 31, text: NodesTextLengthDisplay('Dosif. Volumétrico', 'dosificador_volumetrico'), icon: <AddCircleIcon />, type: 'dosificador_volumetrico', tagname: NodesTagNameDisplay('DOSV', 'dosificador_volumetrico') },
-    { id: 32, text: NodesTextLengthDisplay('Extractor', 'extractor'), icon: <AddCircleIcon />, type: 'extractor', tagname: NodesTagNameDisplay('EXTR', 'extractor') },
-    { id: 33, text: NodesTextLengthDisplay('Filtro', 'filtro'), icon: <AddCircleIcon />, type: 'filtro', tagname: NodesTagNameDisplay('FILTR', 'filtro') },
-    { id: 34, text: NodesTextLengthDisplay('Flujo', 'flujo'), icon: <AddCircleIcon />, type: 'flujo', tagname: NodesTagNameDisplay('FIT', 'flujo') },
-    { id: 35, text: NodesTextLengthDisplay('Flujo Totalizado', 'flujo_totalizado'), icon: <AddCircleIcon />, type: 'flujo_totalizado', tagname: NodesTagNameDisplay('FIT', 'flujo_totalizado') },
-    { id: 36, text: NodesTextLengthDisplay('Fluor', 'fluor'), icon: <AddCircleIcon />, type: 'fluor', tagname: NodesTagNameDisplay('FLUIT', 'fluor') },
-    { id: 37, text: NodesTextLengthDisplay('Generador', 'gpel'), icon: <AddCircleIcon />, type: 'gpel', tagname: NodesTagNameDisplay('GPEL', 'gpel') },
-    { id: 38, text: NodesTextLengthDisplay('Hidrocarburo', 'hidrocarburo'), icon: <AddCircleIcon />, type: 'hidrocarburo', tagname: NodesTagNameDisplay('HIDIT', 'hidrocarburo') },
-    { id: 39, text: NodesTextLengthDisplay('LSHH (Rebalse)', 'lshh'), icon: <AddCircleIcon />, type: 'lshh', tagname: NodesTagNameDisplay('LSHH', 'lshh') },
-    { id: 40, text: NodesTextLengthDisplay('LSH (Alto)', 'lsh'), icon: <AddCircleIcon />, type: 'lsh', tagname: NodesTagNameDisplay('LSH', 'lsh') },
-    { id: 41, text: NodesTextLengthDisplay('LSL (Bajo)', 'lsl'), icon: <AddCircleIcon />, type: 'lsl', tagname: NodesTagNameDisplay('LSL', 'lsl') },
-    { id: 42, text: NodesTextLengthDisplay('LSLL (Seco)', 'lsll'), icon: <AddCircleIcon />, type: 'lsll', tagname: NodesTagNameDisplay('LSLL', 'lsll') },
-    { id: 43, text: NodesTextLengthDisplay('Motor', 'motor'), icon: <AddCircleIcon />, type: 'motor', tagname: NodesTagNameDisplay('MOTR', 'motor') },
-    { id: 44, text: NodesTextLengthDisplay('Nivel', 'level'), icon: <AddCircleIcon />, type: 'level', tagname: NodesTagNameDisplay('LIT', 'level') },
-    { id: 45, text: NodesTextLengthDisplay('Oxígeno', 'oxigeno'), icon: <AddCircleIcon />, type: 'oxigeno', tagname: NodesTagNameDisplay('OXIT', 'oxigeno') },
-    { id: 46, text: NodesTextLengthDisplay('Paleta', 'paleta'), icon: <AddCircleIcon />, type: 'paleta', tagname: NodesTagNameDisplay('PALT', 'paleta') },
-    { id: 47, text: NodesTextLengthDisplay('PH', 'ph'), icon: <AddCircleIcon />, type: 'ph', tagname: NodesTagNameDisplay('PHIT', 'ph') },
-    { id: 48, text: NodesTextLengthDisplay('Planta', 'plta'), icon: <AddCircleIcon />, type: 'plta', tagname: NodesTagNameDisplay('PLTA', 'plta') },
-    { id: 49, text: NodesTextLengthDisplay('PLC', 'plc'), icon: <AddCircleIcon />, type: 'plc', tagname: NodesTagNameDisplay('PLC', 'plc') },
-    { id: 50, text: NodesTextLengthDisplay('PM', 'pm'), icon: <AddCircleIcon />, type: 'pm', tagname: NodesTagNameDisplay('PM', 'pm') },
-    { id: 51, text: NodesTextLengthDisplay('Potencial de Oxidación', 'oxidacion'), icon: <AddCircleIcon />, type: 'oxidacion', tagname: NodesTagNameDisplay('ORPIT', 'oxidacion') },
-    { id: 52, text: NodesTextLengthDisplay('Prensa', 'prensa'), icon: <AddCircleIcon />, type: 'prensa', tagname: NodesTagNameDisplay('PREN', 'prensa') },
-    { id: 53, text: NodesTextLengthDisplay('Presión', 'presion'), icon: <AddCircleIcon />, type: 'presion', tagname: NodesTagNameDisplay('PIT', 'presion') },
-    { id: 54, text: NodesTextLengthDisplay('PSH', 'psh'), icon: <AddCircleIcon />, type: 'psh', tagname: NodesTagNameDisplay('PSH', 'psh') },
-    { id: 55, text: NodesTextLengthDisplay('PSL', 'psl'), icon: <AddCircleIcon />, type: 'psl', tagname: NodesTagNameDisplay('PSL', 'psl') },
-    { id: 56, text: NodesTextLengthDisplay('Reja', 'reja'), icon: <AddCircleIcon />, type: 'reja', tagname: NodesTagNameDisplay('REJA', 'reja') },
-    { id: 57, text: NodesTextLengthDisplay('Sedimentador', 'sedimentador'), icon: <AddCircleIcon />, type: 'sedimentador', tagname: NodesTagNameDisplay('SEDM', 'sedimentador') },
-    { id: 58, text: NodesTextLengthDisplay('Solidos disueltos totales', 'solidos_disueltos'), icon: <AddCircleIcon />, type: 'solidos_disueltos', tagname: NodesTagNameDisplay('SDTIT', 'solidos_disueltos') },
-    { id: 59, text: NodesTextLengthDisplay('Solidos suspendidos totales', 'solidos_suspendidos'), icon: <AddCircleIcon />, type: 'solidos_suspendidos', tagname: NodesTagNameDisplay('SSTIT', 'solidos_suspendidos') },
-    { id: 60, text: NodesTextLengthDisplay('Soplador', 'soplador'), icon: <AddCircleIcon />, type: 'soplador', tagname: NodesTagNameDisplay('SOPL', 'soplador') },
-    { id: 61, text: NodesTextLengthDisplay('Tablero', 'tablero'), icon: <AddCircleIcon />, type: 'tablero', tagname: NodesTagNameDisplay('TBLR', 'tablero') },
-    { id: 62, text: NodesTextLengthDisplay('Tambor', 'tambor'), icon: <AddCircleIcon />, type: 'tambor', tagname: NodesTagNameDisplay('TMBR', 'tambor') },
-    { id: 63, text: NodesTextLengthDisplay('Tamiz', 'tamiz'), icon: <AddCircleIcon />, type: 'tamiz', tagname: NodesTagNameDisplay('TMIZ', 'tamiz') },
-    { id: 64, text: NodesTextLengthDisplay('Temperatura', 'temperatura'), icon: <AddCircleIcon />, type: 'temperatura', tagname: NodesTagNameDisplay('TIT', 'temperatura') },
-    { id: 65, text: NodesTextLengthDisplay('Tornillo', 'tornillo'), icon: <AddCircleIcon />, type: 'tornillo', tagname: NodesTagNameDisplay('TRNI', 'tornillo') },
-    { id: 66, text: NodesTextLengthDisplay('Trend', 'trend'), icon: <AddCircleIcon />, type: 'trend', tagname: NodesTagNameDisplay('Trend', 'trend') },
-    { id: 67, text: NodesTextLengthDisplay('Turbiedad', 'turbiedad'), icon: <AddCircleIcon />, type: 'turbiedad', tagname: NodesTagNameDisplay('TURIT', 'turbiedad') },
-    { id: 68, text: NodesTextLengthDisplay('UPS', 'ups'), icon: <AddCircleIcon />, type: 'ups', tagname: NodesTagNameDisplay('UPS', 'ups') },
-    { id: 69, text: NodesTextLengthDisplay('Válvula análoga', 'valvula_analoga'), icon: <AddCircleIcon />, type: 'valvula_analoga', tagname: NodesTagNameDisplay('VALVA', 'valvula_analoga') },
-    { id: 70, text: NodesTextLengthDisplay('Válvula discreta', 'valvula_discreta'), icon: <AddCircleIcon />, type: 'valvula_discreta', tagname: NodesTagNameDisplay('VALVD', 'valvula_discreta') },
-    { id: 71, text: NodesTextLengthDisplay('VDF', 'vdf'), icon: <AddCircleIcon />, type: 'vdf', tagname: NodesTagNameDisplay('VDF', 'vdf') },
-    { id: 72, text: NodesTextLengthDisplay('Voltaje', 'voltaje'), icon: <AddCircleIcon />, type: 'voltaje', tagname: NodesTagNameDisplay('EIT', 'voltaje') },
-   
+    { text: NodesTextLengthDisplay('Agitador', 'agitador'), icon: <AddCircleIcon />, type: 'agitador', tagname: NodesTagNameDisplay('AGIT', 'agitador') },
+    { text: NodesTextLengthDisplay('Aireador', 'bomba_aireadora'), icon: <AddCircleIcon />, type: 'bomba_aireadora', tagname: NodesTagNameDisplay('BOMB', 'bomba_aireadora') },
+    { text: NodesTextLengthDisplay('Alcalinidad', 'alcalinidad'), icon: <AddCircleIcon />, type: 'alcalinidad', tagname: NodesTagNameDisplay('ALCIT', 'alcalinidad') },
+    { text: NodesTextLengthDisplay('Bastidor', 'bastidor'), icon: <AddCircleIcon />, type: 'bastidor', tagname: NodesTagNameDisplay('BAST', 'bastidor') },
+    { text: NodesTextLengthDisplay('Boquilla', 'boquilla'), icon: <AddCircleIcon />, type: 'boquilla', tagname: NodesTagNameDisplay('BOQ', 'boquilla') },
+    { text: NodesTextLengthDisplay('Calefactor', 'calefactor'), icon: <AddCircleIcon />, type: 'calefactor', tagname: NodesTagNameDisplay('CALEF', 'calefactor') },
+    { text: NodesTextLengthDisplay('Centrífuga', 'clasificador'), icon: <AddCircleIcon />, type: 'clasificador', tagname: NodesTagNameDisplay('CLASI', 'clasificador') },
+    { text: NodesTextLengthDisplay('Color', 'color'), icon: <AddCircleIcon />, type: 'color', tagname: NodesTagNameDisplay('COLIT', 'color') },
+    { text: NodesTextLengthDisplay('Compresor', 'compresor'), icon: <AddCircleIcon />, type: 'compresor', tagname: NodesTagNameDisplay('CMPR', 'compresor') },
+    { text: NodesTextLengthDisplay('Compuerta Tamiz', 'compresor'), icon: <AddCircleIcon />, type: 'compresor', tagname: NodesTagNameDisplay('CMPR', 'compresor') },
+    { text: NodesTextLengthDisplay('Conductividad', 'conductividad'), icon: <AddCircleIcon />, type: 'conductividad', tagname: NodesTagNameDisplay('CONIT', 'conductividad') },
+    { text: NodesTextLengthDisplay('Configuración', 'configuracion'), icon: <AddCircleIcon />, type: 'configuracion', tagname: NodesTagNameDisplay('CONF', 'configuracion') },
+    { text: NodesTextLengthDisplay('Fuga Gas Cloro', 'lshh'), icon: <AddCircleIcon />, type: 'lshh', tagname: NodesTagNameDisplay('LSHH', 'lshh') },
+    { text: NodesTextLengthDisplay('Dosificador', 'bomba_dosificadora'), icon: <AddCircleIcon />, type: 'bomba_dosificadora', tagname: NodesTagNameDisplay('BDOS', 'bomba_dosificadora') },
+    { text: NodesTextLengthDisplay('Extractor', 'extractor'), icon: <AddCircleIcon />, type: 'extractor', tagname: NodesTagNameDisplay('EXTR', 'extractor') },
+    { text: NodesTextLengthDisplay('Filtro', 'filtro'), icon: <AddCircleIcon />, type: 'filtro', tagname: NodesTagNameDisplay('FILTR', 'filtro') },
+    { text: NodesTextLengthDisplay('Grupo Electrógeno', 'gpel'), icon: <AddCircleIcon />, type: 'gpel', tagname: NodesTagNameDisplay('GPEL', 'gpel') },
+    { text: NodesTextLengthDisplay('Medición PH', 'ph'), icon: <AddCircleIcon />, type: 'ph', tagname: NodesTagNameDisplay('PHIT', 'ph') },
+    { text: NodesTextLengthDisplay('Medición Caudal', 'flujo'), icon: <AddCircleIcon />, type: 'flujo', tagname: NodesTagNameDisplay('FIT', 'flujo') },
+    { text: NodesTextLengthDisplay('Medición Cloro', 'cloro'), icon: <AddCircleIcon />, type: 'cloro', tagname: NodesTagNameDisplay('CLIT', 'cloro') },
+    { text: NodesTextLengthDisplay('Medición Fluor', 'fluor'), icon: <AddCircleIcon />, type: 'fluor', tagname: NodesTagNameDisplay('FLUIT', 'fluor') },
+    { text: NodesTextLengthDisplay('Medición Hidrocarburo', 'hidrocarburo'), icon: <AddCircleIcon />, type: 'hidrocarburo', tagname: NodesTagNameDisplay('HIDIT', 'hidrocarburo') },
+    { text: NodesTextLengthDisplay('Medición Nivel', 'level'), icon: <AddCircleIcon />, type: 'level', tagname: NodesTagNameDisplay('LIT', 'level') },
+    { text: NodesTextLengthDisplay('Medición Presión', 'presion'), icon: <AddCircleIcon />, type: 'presion', tagname: NodesTagNameDisplay('PIT', 'presion') },
+    { text: NodesTextLengthDisplay('Medición SDT', 'solidos_disueltos'), icon: <AddCircleIcon />, type: 'solidos_disueltos', tagname: NodesTagNameDisplay('SDTIT', 'solidos_disueltos') },
+    { text: NodesTextLengthDisplay('Medición Turbiedad', 'turbiedad'), icon: <AddCircleIcon />, type: 'turbiedad', tagname: NodesTagNameDisplay('TURIT', 'turbiedad') },
+    { text: NodesTextLengthDisplay('Medición Voltaje', 'voltaje'), icon: <AddCircleIcon />, type: 'voltaje', tagname: NodesTagNameDisplay('EIT', 'voltaje') },
+    { text: NodesTextLengthDisplay('Motobomba', 'bomba_vdf'), icon: <AddCircleIcon />, type: 'bomba_vdf', tagname: NodesTagNameDisplay('BOMB', 'bomba_vdf') },
+    { text: NodesTextLengthDisplay('Oxidación', 'oxigeno'), icon: <AddCircleIcon />, type: 'oxigeno', tagname: NodesTagNameDisplay('OXIT', 'oxigeno') },
+    { text: NodesTextLengthDisplay('Paleta', 'paleta'), icon: <AddCircleIcon />, type: 'paleta', tagname: NodesTagNameDisplay('PALT', 'paleta') },
+    { text: NodesTextLengthDisplay('Partidor Suave', 'bomba_lodo'), icon: <AddCircleIcon />, type: 'bomba_lodo', tagname: NodesTagNameDisplay('BOMBLD', 'bomba_lodo') },
+    { text: NodesTextLengthDisplay('LSHH (Rebalse)', 'lshh'), icon: <AddCircleIcon />, type: 'lshh', tagname: NodesTagNameDisplay('LSHH', 'lshh') },
+    { text: NodesTextLengthDisplay('LSH (Alto)', 'lsh'), icon: <AddCircleIcon />, type: 'lsh', tagname: NodesTagNameDisplay('LSH', 'lsh') },
+    { text: NodesTextLengthDisplay('LSM (Alto)', 'lsh'), icon: <AddCircleIcon />, type: 'lsh', tagname: NodesTagNameDisplay('LSH', 'lsh') },
+    { text: NodesTextLengthDisplay('LSL (Bajo)', 'lsl'), icon: <AddCircleIcon />, type: 'lsl', tagname: NodesTagNameDisplay('LSL', 'lsl') },
+    { text: NodesTextLengthDisplay('LSLL (Seco)', 'lsll'), icon: <AddCircleIcon />, type: 'lsll', tagname: NodesTagNameDisplay('LSLL', 'lsll') },
+    { text: NodesTextLengthDisplay('Planta', 'plta'), icon: <AddCircleIcon />, type: 'plta', tagname: NodesTagNameDisplay('PLTA', 'plta') },
+    { text: NodesTextLengthDisplay('PLC', 'plc'), icon: <AddCircleIcon />, type: 'plc', tagname: NodesTagNameDisplay('PLC', 'plc') },
+    { text: NodesTextLengthDisplay('PM', 'pm'), icon: <AddCircleIcon />, type: 'pm', tagname: NodesTagNameDisplay('PM', 'pm') },
+    { text: NodesTextLengthDisplay('Prensa', 'prensa'), icon: <AddCircleIcon />, type: 'prensa', tagname: NodesTagNameDisplay('PREN', 'prensa') },
+    { text: NodesTextLengthDisplay('Reja', 'reja'), icon: <AddCircleIcon />, type: 'reja', tagname: NodesTagNameDisplay('REJA', 'reja') },
+    { text: NodesTextLengthDisplay('Soplador', 'reja'), icon: <AddCircleIcon />, type: 'reja', tagname: NodesTagNameDisplay('REJA', 'reja') },
+    { text: NodesTextLengthDisplay('Tablero', 'reja'), icon: <AddCircleIcon />, type: 'reja', tagname: NodesTagNameDisplay('REJA', 'reja') },
+    { text: NodesTextLengthDisplay('Tambor', 'tambor'), icon: <AddCircleIcon />, type: 'tambor', tagname: NodesTagNameDisplay('TMBR', 'tambor') },
+    { text: NodesTextLengthDisplay('Tamiz', 'tamiz'), icon: <AddCircleIcon />, type: 'tamiz', tagname: NodesTagNameDisplay('TMIZ', 'tamiz') },
+    { text: NodesTextLengthDisplay('Temperatura', 'temperatura'), icon: <AddCircleIcon />, type: 'temperatura', tagname: NodesTagNameDisplay('TIT', 'temperatura') },
+    { text: NodesTextLengthDisplay('Tornillo', 'tornillo'), icon: <AddCircleIcon />, type: 'tornillo', tagname: NodesTagNameDisplay('TRNI', 'tornillo') },
+    { text: NodesTextLengthDisplay('Trend', 'trend'), icon: <AddCircleIcon />, type: 'trend', tagname: NodesTagNameDisplay('Trend', 'trend') },
+    { text: NodesTextLengthDisplay('UPS', 'ups'), icon: <AddCircleIcon />, type: 'ups', tagname: NodesTagNameDisplay('UPS', 'ups') },
+    { text: NodesTextLengthDisplay('Válvula análoga', 'valvula_analoga'), icon: <AddCircleIcon />, type: 'valvula_analoga', tagname: NodesTagNameDisplay('VALVA', 'valvula_analoga') },
+    { text: NodesTextLengthDisplay('Válvula discreta', 'valvula_discreta'), icon: <AddCircleIcon />, type: 'valvula_discreta', tagname: NodesTagNameDisplay('VALVD', 'valvula_discreta') },
+    { text: NodesTextLengthDisplay('VDF', 'vdf'), icon: <AddCircleIcon />, type: 'vdf', tagname: NodesTagNameDisplay('VDF', 'vdf') },
+    { text: NodesTextLengthDisplay('Ventilador Desgasificador', 'vdf'), icon: <AddCircleIcon />, type: 'vdf', tagname: NodesTagNameDisplay('VDF', 'vdf') }
   ];
+
+  const mainListItems = itemTypes.map((item, idx) => ({
+    ...item,
+    id: idx + 1,
+  }));
 
   const handleToggle = (id) => {
     setOpenItemId(openItemId === id ? null : id);
