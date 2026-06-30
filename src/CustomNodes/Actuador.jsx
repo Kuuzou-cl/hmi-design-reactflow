@@ -1,3 +1,4 @@
+// Actuador.jsx OK
 import { Handle, Position } from '@xyflow/react';
 import actuador_img from './img/actuador.png';
 
@@ -8,19 +9,19 @@ function ActuadorNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Top}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'52%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'50%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
             <Handle
                 type="source"
                 position={Position.Left}
-                style={{ background: '#ebebeb', borderColor:'#000000', top: '52%'}}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '47%'}}
                 id="b"
                 isConnectable={isConnectable}
             />
             <div>
-                <div className='actuador'>
+                <div className='object'>
                     <img src={actuador_img} alt='no_img' />
                     <div>{data.label}</div>
                 </div>
@@ -28,14 +29,14 @@ function ActuadorNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'52%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'50%' }}
                 id="c"
                 isConnectable={isConnectable}
             />
              <Handle
                 type="source"
                 position={Position.Right}
-                style={{ background: '#ebebeb', borderColor:'#000000', top: '52%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '47%' }}
                 id="d"
                 isConnectable={isConnectable}
             />

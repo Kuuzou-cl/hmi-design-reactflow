@@ -1,14 +1,14 @@
 import { Handle, Position } from '@xyflow/react';
-import bomb_img from './img/bomb_d.png';
+import bomb_img from './img/bomba.png';
 
-function BombNode({ data, isConnectable }) {
+function BombaNode({ data, isConnectable }) {
 
     return (
         <div className="text-updater-node">
             <Handle
                 type="source"
                 position={Position.Top}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'39%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
@@ -20,7 +20,7 @@ function BombNode({ data, isConnectable }) {
                 isConnectable={isConnectable}
             />
             <div>
-                <div className='bomb'>
+                <div className='object'>
                     <img src={bomb_img} alt='no_img' />
                     <div>{data.label}</div>
                 </div>
@@ -28,7 +28,7 @@ function BombNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'39%' }}
                 id="c"
                 isConnectable={isConnectable}
             />
@@ -43,4 +43,4 @@ function BombNode({ data, isConnectable }) {
     );
 }
 
-export default BombNode;
+export default BombaNode;

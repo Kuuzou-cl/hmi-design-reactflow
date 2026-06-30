@@ -8,12 +8,12 @@ function ValvDiscretaNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Left}
-                style={{ background: '#ebebeb', borderColor:'#000000'}}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '54%'}}
                 id="b"
                 isConnectable={isConnectable}
             />
             <div>
-                <div className='valvula'>
+                <div className='object'>
                     <img src={valv_discreta_img} alt='no_img' />
                     <div>{data.label}</div>
                 </div>
@@ -21,7 +21,7 @@ function ValvDiscretaNode({ data, isConnectable }) {
              <Handle
                 type="source"
                 position={Position.Right}
-                style={{ background: '#ebebeb', borderColor:'#000000' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '54%'}}
                 id="d"
                 isConnectable={isConnectable}
             />

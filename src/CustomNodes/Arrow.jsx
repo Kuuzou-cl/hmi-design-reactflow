@@ -10,7 +10,7 @@ function ArrowNode({ data,isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Left}
-                style={{ background: '#ebebeb', borderColor: '#000000', top: '48%' }}
+                style={{ background: '#ebebeb', borderColor: '#000000', top: '44%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
@@ -21,7 +21,7 @@ function ArrowNode({ data,isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Right}
-                style={{ background: '#ebebeb', borderColor: '#000000', top: '48%' }}
+                style={{ background: '#ebebeb', borderColor: '#000000', top: '44%' }}
                 id="b"
                 isConnectable={isConnectable}
             />

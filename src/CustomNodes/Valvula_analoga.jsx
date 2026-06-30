@@ -8,12 +8,12 @@ function ValvAnalogaNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Left}
-                style={{ background: '#ebebeb', borderColor:'#000000'}}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '58%'}}
                 id="b"
                 isConnectable={isConnectable}
             />
             <div>
-                <div className='valvula'>
+                <div className='object'>
                     <img src={valv_analoga_img} alt='no_img' />
                     <div>{data.label}</div>
                 </div>
@@ -21,7 +21,7 @@ function ValvAnalogaNode({ data, isConnectable }) {
              <Handle
                 type="source"
                 position={Position.Right}
-                style={{ background: '#ebebeb', borderColor:'#000000' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', top: '58%'}}
                 id="d"
                 isConnectable={isConnectable}
             />

@@ -8,12 +8,12 @@ function CompresorNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Top}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'20%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
             <div>
-                <div className='compresor'>
+                <div className='object'>
                     <img src={compresor_img} alt='no_img' />
                     <div>{data.label}</div>
                 </div>
@@ -21,7 +21,7 @@ function CompresorNode({ data, isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'43.5%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'80%' }}
                 id="c"
                 isConnectable={isConnectable}
             />

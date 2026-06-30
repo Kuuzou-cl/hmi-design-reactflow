@@ -1,4 +1,4 @@
-import gpel_img from './img/GPEL.png';
+import gpel_img from './img/gpel.png';
 
 
 function GPELNode() {

@@ -1,5 +1,5 @@
 import { Handle, Position } from '@xyflow/react';
-import bomb_img from './img/bomba_dosificadora.png';
+import bomb_img from './img/bomba-dosificadora.png';
 
 function BombaDosificadoraNode({ data, isConnectable }) {
 
@@ -20,7 +20,7 @@ function BombaDosificadoraNode({ data, isConnectable }) {
                 isConnectable={isConnectable}
             />
             <div>
-                <div className='bomb_dosificadora'>
+                <div className='object'>
                     <img src={bomb_img} alt='no_img' />
                     <div>{data.label}</div>
                 </div>

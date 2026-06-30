@@ -55,7 +55,6 @@ export default function MenuContent({ addNode, deleteNode, changeNameNode, chang
   const [newText, setNewText] = useState<string>('');
 
   let itemTypes = [
-    /** Objetos sistema */
     { text: NodesTextLengthDisplay('Base Pantalla', 'base'), icon: <AddCircleIcon />, type: 'base', tagname: NodesTagNameDisplay('Base', 'base') },
     { text: NodesTextLengthDisplay('Flecha', 'arrow'), icon: <AddCircleIcon />, type: 'arrow', tagname: NodesTagNameDisplay('Arrow', 'arrow') },
     { text: NodesTextLengthDisplay('Título Pantalla', 'title'), icon: <AddCircleIcon />, type: 'title', tagname: NodesTagNameDisplay('Title', 'title') },
