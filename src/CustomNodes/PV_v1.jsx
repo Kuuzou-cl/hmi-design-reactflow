@@ -9,7 +9,7 @@ function PVNode({ data,isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Top}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'50%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'47%' }}
                 id="a"
                 isConnectable={isConnectable}
             />
@@ -29,7 +29,7 @@ function PVNode({ data,isConnectable }) {
             <Handle
                 type="source"
                 position={Position.Bottom}
-                style={{ background: '#ebebeb', borderColor:'#000000', left:'50%' }}
+                style={{ background: '#ebebeb', borderColor:'#000000', left:'47%' }}
                 id="c"
                 isConnectable={isConnectable}
             />

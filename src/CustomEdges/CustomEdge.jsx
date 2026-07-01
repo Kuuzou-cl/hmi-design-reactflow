@@ -51,9 +51,9 @@ export default function CustomEdge({ id, sourceX, sourceY, targetX, targetY }) {
           position: 'absolute',
           transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
           pointerEvents: 'all',
-          width: '20px',
-          height: '20px',
-          color: '#ff2727',
+          width: '12px',
+          height: '12px',
+          color: '#7e7e7e',
         }}
           className="nodrag nopan"
           onClick={() => {

@@ -6,7 +6,7 @@ function MotorVibradorNode({ data, isConnectable }) {
     return (
         <div className="text-updater-node">
             <div>
-                <div className='small_icon'>
+                <div className='object'>
                     <div>{data.label}</div>
                     <img src={motorvibrador_img} alt='no_img' />
                 </div>

@@ -59,7 +59,9 @@ export default function MenuContent({ addNode, deleteNode, changeNameNode, chang
     { text: NodesTextLengthDisplay('Flecha', 'arrow'), icon: <AddCircleIcon />, type: 'arrow', tagname: NodesTagNameDisplay('Arrow', 'arrow') },
     { text: NodesTextLengthDisplay('Título Pantalla', 'title'), icon: <AddCircleIcon />, type: 'title', tagname: NodesTagNameDisplay('Title', 'title') },
     { text: NodesTextLengthDisplay('Texto', 'text'), icon: <AddCircleIcon />, type: 'text', tagname: NodesTagNameDisplay('Text', 'text') },
-    { text: NodesTextLengthDisplay('Vertice de líneas', 'vertice'), icon: <AddCircleIcon />, type: 'vertice', tagname: NodesTagNameDisplay('Vertice', 'vertice') }
+    { text: NodesTextLengthDisplay('Trend', 'trend'), icon: <AddCircleIcon />, type: 'trend', tagname: NodesTagNameDisplay('Trend', 'trend') },
+    { text: NodesTextLengthDisplay('Vertice de líneas', 'vertice'), icon: <AddCircleIcon />, type: 'vertice', tagname: NodesTagNameDisplay('Vertice', 'vertice') },
+    { text: NodesTextLengthDisplay('Cuadrado', 'square'), icon: <AddCircleIcon />, type: 'square', tagname: NodesTagNameDisplay('Square', 'square') }
   ];
 
   const mainListItems = itemTypes.map((item, idx) => ({

@@ -2,7 +2,6 @@ import './App.css';
 import '@xyflow/react/dist/style.css';
 import { ReactFlow, Panel, Controls, Background, useNodesState, useEdgesState, addEdge, applyNodeChanges } from '@xyflow/react';
 import { useState, useEffect, useCallback } from 'react';
-import { useCookies } from 'react-cookie';
 
 import SideMenu from './CustomComponents/SideMenu.tsx';
 import Card from './CustomComponents/Card.tsx';
@@ -15,6 +14,9 @@ import ArrowNode from './CustomNodes/Arrow.jsx';
 import Arrow2Node from './CustomNodes/Arrow2.jsx';
 import TextNode from './CustomNodes/Text.jsx';
 import VerticeNode from './CustomNodes/Vertice.jsx';
+import TrendNode from './CustomNodes/Trend.jsx';
+import SquareNode from './CustomNodes/Square.jsx';
+import PV_reducidoNode from './CustomNodes/PV_reducido.jsx';
 
 import ActuadorNode from './CustomNodes/Actuador.jsx';
 import ActuadorDosificadorNode from './CustomNodes/Actuador_dosificador.jsx';
@@ -56,7 +58,6 @@ import PLCNode from './CustomNodes/PLC';
 import PMNode from './CustomNodes/PM';
 import PrensaNode from './CustomNodes/Prensa.jsx';
 import PresionNode from './CustomNodes/PV_v1.jsx';
-
 import PSLNode from './CustomNodes/PSL.jsx';
 import RejaNode from './CustomNodes/Reja.jsx';
 import SopladorNode from './CustomNodes/Soplador.jsx';
@@ -99,7 +100,10 @@ const nodeTypes = {
   text: TextNode,
   vertice: VerticeNode,
   title: TitlePlantNode,
-  
+  trend: TrendNode,
+  square: SquareNode,
+  pv_reducido: PV_reducidoNode,
+
   actuador: ActuadorNode,
   actuador_dosificador: ActuadorDosificadorNode,
   agitador: AgitadorNode,
@@ -158,37 +162,61 @@ const nodeTypes = {
   voltaje: VoltajeNode,  
 };
 
+const STORAGE_KEY = 'hmi-diagram-state';
+
 function App() {
   const [nodes, setNodes] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
-  const [cookies, setCookie] = useCookies(['last-diagram']);
   const [proyectName, setProyectName] = useState('Proyecto HMI');
 
   useEffect(() => {
-    const lastName = cookies['savedProyectName'];
-    const lastNodes = cookies['savedNodes'];
-    const lastEdges = cookies['savedEdges'];
+    try {
+      const storedState = window.localStorage.getItem(STORAGE_KEY);
+      if (!storedState) return;
 
-    if ((lastNodes && lastNodes.length !== nodes.length) || (lastEdges && lastEdges.length !== edges.length) ||  (lastName && lastName !== proyectName)) {
-      const userResponse = window.confirm("¿Deseas cargar el último diagrama guardado?");
-      if (userResponse) {
-        setProyectName(lastName);
-        setNodes(lastNodes);
-        setEdges(lastEdges);
-      }else{
-        setProyectName('Proyecto HMI');
-        setCookie('savedProyectName', proyectName);
+      const parsedState = JSON.parse(storedState);
+      const hasSavedData = parsedState && (
+        Array.isArray(parsedState.nodes) ||
+        Array.isArray(parsedState.edges) ||
+        parsedState.proyectName
+      );
+
+      if (!hasSavedData) return;
+
+      const shouldLoadSaved = window.confirm('¿Quieres cargar lo último creado?\n\nAceptar = cargar el último estado guardado\nCancelar = partir de cero');
+
+      if (shouldLoadSaved) {
+        if (parsedState.proyectName) {
+          setProyectName(parsedState.proyectName);
+        }
+        if (Array.isArray(parsedState.nodes)) {
+          setNodes(parsedState.nodes);
+        }
+        if (Array.isArray(parsedState.edges)) {
+          setEdges(parsedState.edges);
+        }
+      } else {
+        window.localStorage.removeItem(STORAGE_KEY);
       }
+    } catch (error) {
+      console.error('No se pudo cargar el estado guardado', error);
     }
-  }, []);
+  }, [setNodes, setEdges]);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify({ proyectName, nodes, edges }));
+    } catch (error) {
+      console.error('No se pudo guardar el estado', error);
+    }
+  }, [nodes, edges, proyectName]);
 
   const onConnect = useCallback(
     (connection) => {
       const edge = { ...connection, type: 'custom-edge' };
       setEdges((eds) => addEdge(edge, eds));
     },
-    [setEdges],
-    setCookie('savedEdges', edges)
+    [setEdges]
   );
 
   const addNode = (nodeType, tagName) => {
@@ -199,7 +227,7 @@ function App() {
     if (nodeType === 'base') {
       newNode = {
         id: newId.toString(),
-        data: { label: tagName },
+        data: { label: tagName, category: nodeType },
         position: { x: 0, y: 0 },
         draggable: true,
         zIndex: -1,
@@ -208,7 +236,7 @@ function App() {
     } else {
       newNode = {
         id: newId.toString(),
-        data: { label: tagName },
+        data: { label: tagName, category: nodeType },
         position: { x: 0, y: 0 },
         draggable: true,
         zIndex: 1,
@@ -223,7 +251,6 @@ function App() {
   const onNodesChange = (changes) => {
     setNodes((nds) => {
       const updatedNodes = applyNodeChanges(changes, nds);
-      setCookie('savedNodes', updatedNodes);
       return updatedNodes;
     });
   };
@@ -242,7 +269,6 @@ function App() {
         }
         return node;
       });
-      setCookie('savedNodes', updatedNodes);
       return updatedNodes;
     });
   };
@@ -258,21 +284,44 @@ function App() {
         }
         return node;
       });
-      setCookie('savedNodes', updatedNodes);
+      return updatedNodes;
+    });
+  };
+
+  const changeNodeType = (nodeId, value) => {
+    setNodes((nds) => {
+      const updatedNodes = nds.map((node) => {
+        if (node.id === nodeId) {
+          const label = node?.data?.label?.toString().toUpperCase() || '';
+          const originalCategory = node?.data?.category || node?.type;
+          const currentType = node?.type;
+          const isLevelToggleNode = label.startsWith('LIT') || originalCategory === 'nivel' || currentType === 'nivel' || currentType === 'nivel_v2';
+          const nextType = isLevelToggleNode
+            ? (currentType === 'nivel_v2' ? 'nivel' : 'nivel_v2')
+            : (currentType === 'pv_reducido' ? originalCategory : 'pv_reducido');
+
+          return {
+            ...node,
+            data: {
+              ...node.data,
+              category: originalCategory,
+            },
+            type: nextType,
+          };
+        }
+        return node;
+      });
       return updatedNodes;
     });
   };
 
   const deleteNode = (node) => {
-    console.log(node);
     setNodes((nds) => {
       const updatedNodes = nds.filter((nd) => nd.id !== node.id);
-      setCookie('savedNodes', updatedNodes);
       return updatedNodes;
     });
     setEdges((eds) => {
       const updatedEdges = eds.filter((edge) => edge.source !== node.id && edge.target !== node.id);
-      setCookie('savedEdges', updatedEdges);
       return updatedEdges;
     });
   };
@@ -317,7 +366,7 @@ function App() {
         style={{ backgroundColor: "#F7F9FB" }}
       >
         <Panel position="top-left">
-          <SideMenu setCookie={setCookie} proyectName={proyectName} setProyectName={setProyectName} addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} />
+          <SideMenu proyectName={proyectName} setProyectName={setProyectName} addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} changeNodeType={changeNodeType} />
         </Panel>
         <Panel position="bottom-right"><Card proyectName={proyectName} exportData={exportData} importData={importData} /></Panel>
         <Background />

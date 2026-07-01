@@ -28,20 +28,18 @@ const Drawer = styled(MuiDrawer)({
 });
 
 
-export default function SideMenu({ setCookie, proyectName, setProyectName, addNode, deleteNode, changeNameNode, changeLockNode, exportData, importData }) {
+export default function SideMenu({ proyectName, setProyectName, addNode, deleteNode, changeNameNode, changeLockNode, changeNodeType, exportData, importData }) {
     const [editingIndex, setEditingIndex] = useState<number | null>(null);
     const [tab, setTab] = useState(0);
 
-    const handleBlur = (index) => {
+const handleBlur = () => {
         setEditingIndex(null);
-        setCookie('savedProyectName', proyectName)
     };
 
     const handleEditClick = (index: number, currentText: string) => {
         setEditingIndex(index);
         setProyectName(currentText);
-        setCookie('savedProyectName', proyectName)
-      };
+    };
 
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
         setTab(newValue);
@@ -77,7 +75,7 @@ export default function SideMenu({ setCookie, proyectName, setProyectName, addNo
                                     type="text"
                                     value={proyectName}
                                     onChange={(e) => setProyectName(e.target.value)}
-                                    onBlur={() => handleBlur(1)}
+                                    onBlur={() => handleBlur()}
                                     autoFocus
                                 />
                             </>
@@ -105,7 +103,7 @@ export default function SideMenu({ setCookie, proyectName, setProyectName, addNo
                 }}
             >
                 {tab === 0 && (
-                    <MenuContent addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} exportData={exportData} importData={importData} />
+                    <MenuContent addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} changeNodeType={changeNodeType} exportData={exportData} importData={importData} />
                 )}
                 {tab === 1 && (
                     <MenuContent_Dibujos addNode={addNode} deleteNode={deleteNode} changeNameNode={changeNameNode} changeLockNode={changeLockNode} exportData={exportData} importData={importData} />

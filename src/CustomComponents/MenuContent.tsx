@@ -22,6 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import MenuOpenIcon from '@mui/icons-material/MenuOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
+import StyleIcon from '@mui/icons-material/Style';
 
 
 import { useStore } from '@xyflow/react';
@@ -30,9 +31,17 @@ const nodesSelector = (state) => {
   return state.nodes;
 };
 
+const getNodeCategory = (node) => {
+  return node?.data?.category || node?.type;
+};
+
 const NodesTextLengthDisplay = (text, type) => {
   const nodes = useStore(nodesSelector);
-  return text + ' (' + nodes.filter((node) => node.type === type).length + ')' || 0;
+  const matchingNodes = type === 'nivel'
+    ? nodes.filter((node) => getNodeCategory(node) === 'nivel' || getNodeCategory(node) === 'nivel_v2')
+    : nodes.filter((node) => getNodeCategory(node) === type);
+
+  return text + ' (' + matchingNodes.length + ')' || 0;
 };
 
 const NodesTagNameDisplay = (text, type) => {
@@ -43,11 +52,19 @@ const NodesTagNameDisplay = (text, type) => {
 
 const NodesTypeDisplay = (type) => {
   const nodes = useStore(nodesSelector);
-  return nodes.filter((node) => node.type === type) || [];
+  return type === 'nivel'
+    ? nodes.filter((node) => getNodeCategory(node) === 'nivel' || getNodeCategory(node) === 'nivel_v2') || []
+    : nodes.filter((node) => getNodeCategory(node) === type) || [];
 };
 
+const isLitNode = (node) => {
+  const label = node?.data?.label?.toString().toUpperCase() || '';
+  const litPrefixes = ['LIT', 'ALIT', 'CL', 'COIT', 'FIT', 'FLU', 'HID', 'ORPIT', 'PHIT', 'PIT', 'TIT', 'TUR', 'SIT', 'XIT', 'ET'];
 
-export default function MenuContent({ addNode, deleteNode, changeNameNode, changeLockNode, exportData, importData }) {
+  return litPrefixes.some((prefix) => label.startsWith(prefix)) || node?.type === 'nivel' || node?.type === 'nivel_v2';
+};
+
+export default function MenuContent({ addNode, deleteNode, changeNameNode, changeLockNode, changeNodeType, exportData, importData }) {
 
   const [openItemId, setOpenItemId] = useState(null);
 
@@ -87,7 +104,6 @@ export default function MenuContent({ addNode, deleteNode, changeNameNode, chang
     { text: NodesTextLengthDisplay('Motor', 'motor'), icon: <AddCircleIcon />, type: 'motor', tagname: NodesTagNameDisplay('MOTR', 'motor') },
     { text: NodesTextLengthDisplay('Motor Vibrador', 'motovibrador'), icon: <AddCircleIcon />, type: 'motovibrador', tagname: NodesTagNameDisplay('VIBR', 'motovibrador') },
     { text: NodesTextLengthDisplay('Nivel', 'nivel'), icon: <AddCircleIcon />, type: 'nivel', tagname: NodesTagNameDisplay('LIT', 'nivel') },
-    { text: NodesTextLengthDisplay('Nivel v2', 'nivel_v2'), icon: <AddCircleIcon />, type: 'nivel_v2', tagname: NodesTagNameDisplay('LIT', 'nivel_v2') },
     { text: NodesTextLengthDisplay('Oxígeno (PV)', 'oxigeno'), icon: <AddCircleIcon />, type: 'oxigeno', tagname: NodesTagNameDisplay('ORPIT', 'oxigeno') },
     { text: NodesTextLengthDisplay('Partido Suave', 'partidosuave'), icon: <AddCircleIcon />, type: 'partidosuave', tagname: NodesTagNameDisplay('PSVE', 'partidosuave') },
     { text: NodesTextLengthDisplay('PH (PV)', 'ph'), icon: <AddCircleIcon />, type: 'ph', tagname: NodesTagNameDisplay('PHIT', 'ph') },
@@ -180,6 +196,9 @@ export default function MenuContent({ addNode, deleteNode, changeNameNode, chang
                           ) : (
                             nd.data.label
                           )}
+                        </TableCell>
+                        <TableCell sx={{ textAlign: 'end' }}>
+                          <StyleIcon onClick={() => changeNodeType(nd.id)} />
                         </TableCell>
                         <TableCell sx={{ textAlign: 'end' }}>{ (nd.draggable === true) ? <LockOpenIcon onClick={() => handleLock(nd.id, nd.draggable)} /> :  <LockIcon onClick={() => handleLock(nd.id, nd.draggable)} /> } </TableCell>
                         <TableCell sx={{ textAlign: 'end' }}><DeleteIcon onClick={() => deleteNode(nd)} /></TableCell>

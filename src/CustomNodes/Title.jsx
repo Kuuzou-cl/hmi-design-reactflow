@@ -1,12 +1,12 @@
 import { memo } from 'react';
 import title_img from './img/Title.png';
-import { Handle, Position, NodeResizer } from '@xyflow/react';
+import { NodeResizer } from '@xyflow/react';
 
 const TitleNode = ({ data, selected }) => {
     return (
         <>
             <NodeResizer
-                color="#ff0071"
+                color="#000000"
                 isVisible={selected}
                 ResizeControlDirection="horizontal"
                 minWidth={250}
